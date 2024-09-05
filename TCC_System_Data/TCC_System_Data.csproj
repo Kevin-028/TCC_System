@@ -22,4 +22,8 @@
     <ProjectReference Include="..\TCC_System_Domain\TCC_System_Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

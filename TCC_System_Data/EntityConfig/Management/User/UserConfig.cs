@@ -10,7 +10,6 @@ namespace TCC_System_Data.EntityConfig
         {
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Name).HasColumnType("VARCHAR(200)");
-            builder.Property(x => x.GroupName).HasColumnType("VARCHAR(200)");
 
             builder.Property(x => x.RecordCreatedBy).HasColumnType("VARCHAR(30)");
             builder.Property(x => x.RecordUpdatedBy).HasColumnType("VARCHAR(30)");
