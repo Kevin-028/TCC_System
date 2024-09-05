@@ -7,11 +7,9 @@ namespace TCC_System_Application
     {
 
 
-
-
         public static User ToUser(UserViewModel view)
         {
-            return new User(view.Login, view.GroupName, view.Name, view.Email, Languages.Br);
+            return new User(view.Login, view.Name, view.Email,view.Password, Languages.Br);
         }
 
     }

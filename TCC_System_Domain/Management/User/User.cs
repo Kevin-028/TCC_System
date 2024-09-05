@@ -7,10 +7,10 @@ namespace TCC_System_Domain.Management
     public class User : Entity, IAggregateRoot
     {
         public int Id { get; private set; }
-        public string GroupName { get; private set; }
         public string Login { get; private set; }
         public string Name { get; private set; }
         public string Email { get; private set; }
+        public string Password { get; private set; }
         public Languages Language { get; private set; }
         public bool Ativo { get; private set; }
 
@@ -18,17 +18,17 @@ namespace TCC_System_Domain.Management
         public IReadOnlyCollection<UserClaims> UserClaims => _userClaims;
 
 
-        public User(string login, string groupName, string name, string email, Languages language)
+        public User(string login, string name, string email, string password, Languages language)
         {
             _userClaims = new List<UserClaims>();
             SetLanguage(language);
             SetLogin(login);
-            SetGroup(groupName);
             SetName(name);
             SetEmail(email);
+            SetPassWord(password);
             SetStatusAtivo();
         }
-        public void SetGroup(string group) => GroupName = group;
+        public void SetPassWord(string passWord) => Password = passWord;
         public void SetLogin(string user) => Login = user;
         public void SetName(string name) => Name = name;
         public void SetEmail(string email) => Email = EntityValidation.SetEmailProperty(email);

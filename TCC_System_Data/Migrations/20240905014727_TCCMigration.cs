@@ -12,7 +12,7 @@ namespace TCC_System_Data.Migrations
                 columns: table => new
                 {
                     ClaimID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Sqlite:Autoincrement", true),
                     RecordCreatedBy = table.Column<string>(type: "VARCHAR(30)", nullable: true),
                     RecordUpdatedBy = table.Column<string>(type: "VARCHAR(30)", nullable: true),
                     RecordCreationDate = table.Column<DateTime>(type: "DATETIME", nullable: true),
@@ -29,15 +29,15 @@ namespace TCC_System_Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("Sqlite:Autoincrement", true),
                     RecordCreatedBy = table.Column<string>(type: "VARCHAR(30)", nullable: true),
                     RecordUpdatedBy = table.Column<string>(type: "VARCHAR(30)", nullable: true),
                     RecordCreationDate = table.Column<DateTime>(type: "DATETIME", nullable: true),
                     RecordUpdateDate = table.Column<DateTime>(type: "DATETIME", nullable: true),
-                    GroupName = table.Column<string>(type: "VARCHAR(200)", nullable: true),
                     Login = table.Column<string>(nullable: true),
                     Name = table.Column<string>(type: "VARCHAR(200)", nullable: true),
                     Email = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true),
                     Language = table.Column<int>(nullable: false),
                     Ativo = table.Column<bool>(nullable: false)
                 },

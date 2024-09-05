@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TCC_System_Domain.Core;
+﻿using TCC_System_Domain.Core;
 using TCC_System_Domain.Management;
 
 namespace TCC_System_Application.ManagementServices

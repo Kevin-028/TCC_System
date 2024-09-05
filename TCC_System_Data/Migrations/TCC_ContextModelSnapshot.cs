@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TCC_System_Data;
 
@@ -15,19 +14,16 @@ namespace TCC_System_Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.8")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "3.1.8");
 
             modelBuilder.Entity("TCC_System_Domain.Management.Claims", b =>
                 {
                     b.Property<int>("ClaimID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("NomeClaim")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("RecordCreatedBy")
                         .HasColumnType("VARCHAR(30)");
@@ -50,26 +46,25 @@ namespace TCC_System_Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("Ativo")
-                        .HasColumnType("bit");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GroupName")
-                        .HasColumnType("VARCHAR(200)");
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("Language")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Login")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .HasColumnType("VARCHAR(200)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("RecordCreatedBy")
                         .HasColumnType("VARCHAR(30)");
@@ -91,10 +86,10 @@ namespace TCC_System_Data.Migrations
             modelBuilder.Entity("TCC_System_Domain.Management.UserClaims", b =>
                 {
                     b.Property<int>("UsuarioID")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("ClaimID")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("RecordCreatedBy")
                         .HasColumnType("VARCHAR(30)");
