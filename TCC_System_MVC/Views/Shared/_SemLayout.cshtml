@@ -23,6 +23,8 @@
     <!-- Template Main CSS File -->
     <link href="~/Content/style.css" rel="stylesheet">
     <link href="~/Content/Site.css" rel="stylesheet">
+    <link href="~/Content/toastr.min.css" rel="stylesheet">
+
 
 </head>
 <body>
@@ -40,6 +42,9 @@
     @RenderSection("scripts", required: false)
 
     <script src="~/Scripts/main.js"></script>
+    <script src="~/Scripts/page-functions.js"></script>
+    <script src="~/Scripts/toastr.min.js"></script>
+
     <!-- Vendor JS Files -->
     <script src="~/vendor/apexcharts/apexcharts.min.js"></script>
     <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -49,7 +54,30 @@
     <script src="~/vendor/simple-datatables/simple-datatables.js"></script>
     <script src="~/vendor/tinymce/tinymce.min.js"></script>
     <script src="~/vendor/php-email-form/validate.js"></script>
+    <script>
+        $(document).ready(function () {
 
+            // Toast Configuration
+            toastr.options = {
+                "closeButton": false,
+                "debug": false,
+                "newestOnTop": true,
+                "progressBar": false,
+                "positionClass": "toast-bottom-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+        });
+    </script>
 
-</body>
-</html>
+       
+</body >
+</html >

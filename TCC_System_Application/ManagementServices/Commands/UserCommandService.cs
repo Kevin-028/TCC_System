@@ -24,8 +24,8 @@ namespace TCC_System_Application.ManagementServices
         public void Insert(UserViewModel view, string user)
         {
             User obj = Adapter.ToUser(view);
-
-            obj.AddClaimsList(view.Claims);
+            
+            //obj.AddClaimsList(view.Claims);
 
             Repository.Insert(obj);
 

@@ -1,4 +1,6 @@
 ﻿using SimpleInjector;
+using TCC_System_Application.ManagementServices.Query;
+using TCC_System_Application.ManagementServices;
 using TCC_System_Data;
 using TCC_System_Data.UnitOfWorks;
 using TCC_System_Domain.Core;
@@ -14,6 +16,8 @@ namespace TCC_System_Application.IoC
             container.Register<IUserRepository, UserRepository>(Lifestyle.Scoped);
 
             // Application Services
+            container.Register<IUserCommandService, UserCommandService>(Lifestyle.Scoped);
+            container.Register<IUserQueryService, UserQueryService>(Lifestyle.Scoped);
 
             // Domain Services
 

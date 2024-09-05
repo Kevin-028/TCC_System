@@ -7,9 +7,6 @@ namespace TCC_System_Application.ManagementServices
     {
         public int Id { get; set; }
 
-        [Display(Name = "Grupo")]
-        public string Login { get; set; }
-
         [Display(Name = "Nome")]
         public string Name { get; set; }
 

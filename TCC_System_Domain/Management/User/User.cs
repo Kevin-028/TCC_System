@@ -18,20 +18,20 @@ namespace TCC_System_Domain.Management
         public IReadOnlyCollection<UserClaims> UserClaims => _userClaims;
 
 
-        public User(string login, string name, string email, string password, Languages language)
+        public User(string name, string email, string password, Languages language)
         {
             _userClaims = new List<UserClaims>();
             SetLanguage(language);
-            SetLogin(login);
             SetName(name);
             SetEmail(email);
             SetPassWord(password);
             SetStatusAtivo();
+            SetLogin();
         }
         public void SetPassWord(string passWord) => Password = passWord;
-        public void SetLogin(string user) => Login = user;
         public void SetName(string name) => Name = name;
         public void SetEmail(string email) => Email = EntityValidation.SetEmailProperty(email);
+        public void SetLogin() => Login = this.Email;
         public void SetStatusAtivo() => Ativo = true;
         public void SetStatusInativo() => Ativo = false;
         public void SetLanguage(Languages language) => Language = language;
