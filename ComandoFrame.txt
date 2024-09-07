@@ -2,3 +2,5 @@ dotnet ef migrations add TCCMigration -p "C:\Users\qo1barboke\Desktop\Faculdade\
 
 dotnet ef database update -p "C:\Users\qo1barboke\Desktop\Faculdade\TCC_System\TCC_System_Data\TCC_System_Data.csproj" -s "C:\Users\qo1barboke\Desktop\Faculdade\TCC_System\Console\ConsoleApp1\ConsoleApp1.csproj" -v
 
+
+dotnet ef database update -p "C:\Users\qo1barboke\Desktop\Faculdade\TCC_System\TCC_System_Data\TCC_System_Data.csproj" "C:\Users\qo1barboke\Desktop\Faculdade\TCC_System\ConsoleApp1\ConsoleApp1.csproj" -v

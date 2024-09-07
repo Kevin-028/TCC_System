@@ -40,9 +40,5 @@ namespace TCC_System_MVC.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-
-
-
-
     }
 }

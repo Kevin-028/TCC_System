@@ -20,6 +20,7 @@ namespace TCC_System_Application.IoC
             container.Register<IUserQueryService, UserQueryService>(Lifestyle.Scoped);
 
             // Domain Services
+            container.Register<IHandler<DomainNotification>, DomainNotificationHandler>(Lifestyle.Scoped);
 
             // Events
 
