@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
+using TCC_System_Application.ManagementServices;
 using TCC_System_Application.ManagementServices.Query;
 using TCC_System_Domain.Core;
 using TCC_System_MVC.Core;
@@ -80,9 +81,13 @@ namespace TCC_System_MVC.Controllers
         [ChildActionOnly]
         public ContentResult UserName()
         {
+
             try
             {
-                var UserName = new ActiveDirectoryUser(User.Identity.Name).Name;
+                var a = CookieManager.GetUserJsonByToken("TCC_System");
+
+                var UserName = a.Nome;
+
                 return Content(UserName);
             }
             catch (System.Exception)
@@ -91,10 +96,10 @@ namespace TCC_System_MVC.Controllers
             }
         }
 
-        public void Cookie(IUserQueryService _userQueryService)
+        public void Cookie(IUserQueryService _userQueryService, UserViewModel view)
         {
 
-            var usuario = _userQueryService.ObterUserEAcessosPorLogin(User.Identity.Name);
+            var usuario = _userQueryService.ObterUserEAcessosPorLogin(view.Email);
 
             var tokenCookie = CookieManager.GenerateTokenCookie(usuario);
 

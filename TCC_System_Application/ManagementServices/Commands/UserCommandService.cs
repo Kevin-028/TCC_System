@@ -1,4 +1,5 @@
-﻿using TCC_System_Domain.Core;
+﻿using System.Linq;
+using TCC_System_Domain.Core;
 using TCC_System_Domain.Management;
 
 namespace TCC_System_Application.ManagementServices
@@ -10,6 +11,7 @@ namespace TCC_System_Application.ManagementServices
         void Disable(int id, string user);
         void Active(int id, string user);
         void RemoveClaim(int idSite, int idMachine, string user);
+        void Login(UserViewModel view);
     }
 
     public class UserCommandService : ApplicationService, IUserCommandService
@@ -20,14 +22,37 @@ namespace TCC_System_Application.ManagementServices
         {
             Repository = repository;
         }
+        public void Login(UserViewModel view)
+        {
+            var a = Repository.FindUserByLogin(view.Email);
+
+            if(a != null)
+            {
+                if(a.Password != view.Password)
+                {
+                    AssertionConcern.AssertNotification("Algo esta incorreto.");
+                }
+            }
+        }
 
         public void Insert(UserViewModel view, string user)
         {
-            User obj = Adapter.ToUser(view);
-            
-            //obj.AddClaimsList(view.Claims);
+            var a = Repository.FindListAsNoTracking(x => x.Login == view.Email).FirstOrDefault();
 
-            Repository.Insert(obj);
+            if(a == null)
+            {
+                User obj = Adapter.ToUser(view);
+            
+                obj.AddClaimsList(view.Claims);
+
+                Repository.Insert(obj);
+            }
+            else
+            {
+                AssertionConcern.AssertNotification("Email ja cadastrado");
+
+            }
+
 
             if (Commit(user)) { }
             else

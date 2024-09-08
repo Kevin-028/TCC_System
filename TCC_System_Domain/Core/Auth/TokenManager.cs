@@ -21,7 +21,6 @@ namespace TCC_System_Domain.Core
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                        new Claim("DomainLogin", user.DomainLogin),
                         new Claim("Login", user.Login),
                         new Claim("Nome", user.Nome),
                         new Claim("Email", user.Email),
@@ -32,26 +31,6 @@ namespace TCC_System_Domain.Core
             };
 
             return tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
-        }
-
-        public static string GenerateDbToken(DBJson db)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new[]
-                {
-                        new Claim("Server", db.Server),
-                        new Claim("User", db.User),
-                        new Claim("Password", db.Password)
-                }),
-
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(GenerateSecretKey()), SecurityAlgorithms.HmacSha256Signature)
-            };
-
-            var token = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
-            return CompressString(token);
         }
 
         public static DBJson GetDBJsonByToken(string tokenValue)
@@ -88,7 +67,7 @@ namespace TCC_System_Domain.Core
 
         public static string GetTokenKey()
         {
-            return "LLSToken";
+            return "TCC_System";
         }
 
         public static SecurityKey GetFixedSecretKey()
