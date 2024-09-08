@@ -10,7 +10,15 @@ namespace TCC_System_Data
             : base(contex)
         {
         }
+        public User FindUserByLogin(string login)
+        {
+            return Context.Users
+                .Include(c => c.UserClaims)
+                .ThenInclude(v => v.Claims)
+                .Where(x => x.Login == login)
+                .FirstOrDefault();
 
+        }
         public User FindUserClaim(int id)
         {
             return Context.Users

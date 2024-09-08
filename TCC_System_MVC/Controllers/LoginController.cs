@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using TCC_System_Application.ManagementServices;
 using TCC_System_Application.ManagementServices.Query;
 
@@ -23,7 +24,28 @@ namespace TCC_System_MVC.Controllers
         [HttpGet]
         public ActionResult NewUser()
         {
+            @ViewBag.Claims = new SelectList(new List<int>{ 1 }, 1);
+
             return View();
+        }
+        [HttpPost]
+        public JsonResult Login(UserViewModel view)
+        {
+            _userCommandService.Login(view);
+            
+            var results = JsonNotification();
+
+            if (results.Data.ToString().Contains("SUCCESS"))
+            {
+                Cookie(_userQueryService, view);
+            }
+
+            return new JsonResult
+            {
+                Data = new { data = results.Data },
+
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
         }
 
         [HttpPost]
@@ -40,5 +62,6 @@ namespace TCC_System_MVC.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+        
     }
 }

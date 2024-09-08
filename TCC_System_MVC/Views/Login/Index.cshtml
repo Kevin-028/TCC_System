@@ -40,12 +40,15 @@
                                 </div>
 
                                 <div class="col-12">
-                                    @Html.LabelFor(model => model.Password, new { @class = "form-label" }) : 
+                                    @Html.LabelFor(model => model.Password, new { @class = "form-label" }) :
                                     @Html.TextBoxFor(model => model.Password, new { @class = "form-control", required = "required" })
                                     <div class="invalid-feedback">Por favor, digite sua senha!</div>
                                 </div>
                                 <div class="col-12">
-                                    <button class="btn btn-primary w-100" type="submit">Login</button>
+                                    <button id="Save" class="btn btn-primary w-100" type="button">
+                                        <span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>
+                                        <span class="">logar</span>
+                                    </button>
                                 </div>
                                 <div class="col-12">
                                     <p class="small mb-0">Não tem conta? <a href="@Url.Action("NewUser", "Login")">Novo usuário</a></p>
@@ -61,3 +64,27 @@
     </section>
 
 </div>
+@section scripts{
+    <script>
+
+    function Save() {
+
+        $("#Save").click(function () {
+            PostForm(this.form, '@Url.Action("Login", "Login" , Request.Url.Scheme)', PostArea, false);
+        });
+
+        function PostArea(result) {
+            if (ShowJsonResult(result)) {
+                
+                setInterval(function () {
+                    window.location.replace('@Url.Action("", "Home")');
+                }, 2500);
+            }
+        };
+    }
+    Save();
+
+
+    </script>
+
+}

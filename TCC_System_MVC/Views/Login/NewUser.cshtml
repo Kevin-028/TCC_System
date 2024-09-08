@@ -50,8 +50,13 @@
                                         <div class="invalid-feedback">Você deve concordar antes de enviar</div>
                                     </div>
                                 </div>
+                                @Html.DropDownListFor(model => model.Claims, null, " ", new { @class = "form-control form-control-sm visually-hidden" })
+
                                 <div class="col-12">
-                                    <button id="Save" class="btn btn-primary w-100">Criar conta</button>
+                                    <button id="Save" class="btn btn-primary w-100" type="button">
+                                        <span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>
+                                        <span class="">Criar conta</span>
+                                    </button>
                                 </div>
                                 <div class="col-12">
                                     <p class="small mb-0">Já tem uma conta?<a href="@Url.Action("index", "Login")">Login</a></p>
@@ -66,23 +71,25 @@
     </section>
 </div>
 @section scripts{
- <script>
+    <script>
 
-    function Save() {
+        function Save() {
 
-        $("#Save").click(function () {
-            PostForm(this.form, '@Url.Action("NewUser", "Login" , Request.Url.Scheme)', PostArea, false);
-        });
+            $("#Save").click(function () {
+                PostForm(this.form, '@Url.Action("NewUser", "Login" , Request.Url.Scheme)', PostArea, false);
+            });
 
-        function PostArea(result) {
-            if (ShowJsonResult(result)) {
+            function PostArea(result) {
+                if (ShowJsonResult(result)) {
+                    setInterval(function () {
+                        window.location.replace(@Url.Action("", "Login"));
+                    }, 2500);
+                }
+            };
+        }
+        Save();
 
-            }
-        };
-    }
-    Save();
 
-
- </script>
+    </script>
 
 }

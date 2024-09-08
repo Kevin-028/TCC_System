@@ -77,7 +77,7 @@ namespace TCC_System_Application.ManagementServices.Query
             login = login.Substring(login.IndexOf(@"\") + 1);
 
             var sql = @"
-                SELECT GroupName as DomainLogin, [Login],[Name] as Nome, Email
+                SELECT [Login],[Name] as Nome, Email
                 FROM AUTH_Users
                 WHERE [Login] = @login
             ";
