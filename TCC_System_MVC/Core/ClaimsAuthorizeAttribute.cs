@@ -13,7 +13,7 @@ namespace TCC_System_MVC.Core
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            Sistema = "LLSToken";
+            Sistema = "TCC_System";
 
             var user = CookieManager.GetUserJsonByToken(Sistema);
 

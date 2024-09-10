@@ -106,6 +106,12 @@ namespace TCC_System_MVC.Controllers
             HttpContext.Response.Cookies.Set(tokenCookie);
 
         }
+        public void CookieRemove()
+        {
+            HttpContext.Response.Cookies.Set(CookieManager.RemoveCookie());
+        }
+
+
         public ActionResult SetLanguage(string language)
         {
             if (!string.IsNullOrEmpty(language))

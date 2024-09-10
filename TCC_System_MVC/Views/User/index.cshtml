@@ -1,0 +1,146 @@
+﻿@model  TCC_System_Application.ManagementServices.UserViewModel
+
+@{
+    ViewBag.Title = "index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="pagetitle">
+    <h1>Profile</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item">Users</li>
+            <li class="breadcrumb-item active">Profile</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<section class="section profile">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body pt-3">
+                    <!-- Bordered Tabs -->
+                    <ul class="nav nav-tabs nav-tabs-bordered">
+
+                        <li class="nav-item">
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content pt-2">
+                        <div class="tab-pane fade show active profile-overview" id="profile-overview">
+
+                            <h5 class="card-title">Profile Details</h5>
+
+                            <div class="col-12">
+                                @Html.LabelFor(model => model.Name, new { @class = "form-label" }) :
+                                @Html.DisplayFor(model => model.Name, new { @class = "form-control" })
+                            </div>
+
+                            <div class="col-12">
+                                @Html.LabelFor(model => model.Email, new { @class = "form-label" }) :
+                                @Html.DisplayFor(model => model.Email, new { @class = "form-control", required = "required" })
+                            </div>
+
+
+                        </div>
+
+                        <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
+                            <form>
+                                @Html.HiddenFor(model => model.Id)
+
+                                <div class="col-12">
+                                    @Html.LabelFor(model => model.Name, new { @class = "form-label" }) :
+                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", required = "required" })
+                                    <div class="invalid-feedback">Por favor, digite seu nome!</div>
+                                </div>
+
+                                <div class="col-12">
+                                    @Html.LabelFor(model => model.Email, new { @class = "form-label" }) :
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control readonly", required = "required", ReadOnly = "ReadOnly" })
+                                    <div class="invalid-feedback">Por favor, insira um endereço de e-mail válido!</div>
+                                </div>
+
+                                @Html.DropDownListFor(model => model.Claims, null, " ", new { @class = "form-control form-control-sm visually-hidden" })
+
+                                <button id="Save" class="btn btn-primary w-100 mt-3" type="button">
+                                    <span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>
+                                    <span class="">Alterar conta</span>
+                                </button>
+                            </form><!-- End Profile Edit Form -->
+                        </div>
+
+
+                        <div class="tab-pane fade pt-3" id="profile-change-password">
+                            <!-- Change Password Form -->
+                            <form>
+                                @Html.HiddenFor(model => model.Id)
+
+                                <div class="col-12">
+                                    @Html.LabelFor(model => model.OldPassword, new { @class = "col-md-4 col-lg-3 col-form-label" }) :
+                                    @Html.TextBoxFor(model => model.OldPassword, new { @class = "form-control", required = "required" })
+                                    <div class="invalid-feedback">Por favor, digite sua senha!</div>
+                                </div>
+
+                                <div class="col-12">
+                                    @Html.LabelFor(model => model.NewPassword, new { @class = "form-label" }) :
+                                    @Html.TextBoxFor(model => model.NewPassword, new { @class = "form-control", required = "required" })
+                                    <div class="invalid-feedback">Por favor, digite sua senha!</div>
+                                </div>
+
+                                <div class="row mb-3 mt-3">
+                                    <button id="Save" class="btn btn-primary w-100 PW" type="button">
+                                        <span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>
+                                        <span class="">Alterar senha</span>
+                                    </button>
+                                </div>
+
+                            </form><!-- End Change Password Form -->
+
+                        </div>
+
+                    </div><!-- End Bordered Tabs -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+@section scripts{
+    <script>
+        function Update() {
+
+            $("#Save").click(function () {
+                PutForm(this.form, '@Url.Action("User", "User" , Request.Url.Scheme)', PostArea, false);
+            });
+            $("#Save.PW").click(function () {
+                PutForm(this.form, '@Url.Action("UserPW", "User", Request.Url.Scheme)', Callback, false);
+            });
+
+            function PostArea(result) {
+                if (ShowJsonResult(result)) {
+                    window.location.reload(true);
+                }
+            };
+            function Callback(result) {
+                if (ShowJsonResult(result)) {
+
+                }
+            }
+        }
+
+        Update();
+
+
+    </script>
+
+}

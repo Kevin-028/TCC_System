@@ -16,6 +16,7 @@ namespace TCC_System_Application.ManagementServices.Query
         List<string> GetEmailbyNotification(int id);
         UserJson ObterUserEAcessosPorLogin(string login);
         List<string> GetEmailbyIssuer(int id, string issuer);
+        UserViewModel GetForLogin(string login);
     }
     public class UserQueryService : IUserQueryService
     {
@@ -36,6 +37,12 @@ namespace TCC_System_Application.ManagementServices.Query
             var sql = CreateSQLQuery() + " where ID = @id ";
 
             return Repository.GetDbConnection().QuerySingleOrDefault<UserViewModel>(sql, new { id });
+        }
+        public UserViewModel GetForLogin(string login)
+        {
+            var sql = CreateSQLQuery() + " where Login = @login ";
+
+            return Repository.GetDbConnection().QuerySingleOrDefault<UserViewModel>(sql, new { login });
         }
 
         public UserViewModel GetForIdUserClaim(int id)

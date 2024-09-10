@@ -8,7 +8,6 @@ namespace TCC_System_Domain.Core.Auth.JsonObjects
     public class UserJson
     {
         // Essas propriedades precisam estar abertas, não podem ser private devido a renderização do Token
-        public string DomainLogin { get; set; }
         public string Login { get; set; }
         public string Nome { get; set; }
         public string Email { get; set; }
@@ -19,9 +18,8 @@ namespace TCC_System_Domain.Core.Auth.JsonObjects
         {
         }
 
-        public UserJson(string domainLogin, string login, string nome, string email)
+        public UserJson(string login, string nome, string email)
         {
-            DomainLogin = domainLogin;
             Login = login;
             Nome = nome;
             Email = email;
@@ -67,15 +65,6 @@ namespace TCC_System_Domain.Core.Auth.JsonObjects
                 return false;
             }
 
-        }
-
-
-        public string LoginCompleto
-        {
-            get
-            {
-                return DomainLogin + @"\" + Login;
-            }
         }
 
         public bool UsuarioPossuiClaim(string claim)

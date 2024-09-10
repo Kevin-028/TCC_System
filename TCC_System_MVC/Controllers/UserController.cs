@@ -1,16 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
-using TCC_System_Application.ManagementServices;
 using TCC_System_Application.ManagementServices.Query;
+using TCC_System_Application.ManagementServices;
+using TCC_System_MVC.Core;
 
 namespace TCC_System_MVC.Controllers
 {
-    public class LoginController : BaseController
+    public class UserController : BaseController
     {
         private readonly IUserCommandService _userCommandService;
         private readonly IUserQueryService _userQueryService;
 
-        public LoginController(IUserCommandService userCommandService, IUserQueryService userQueryService)
+        public UserController(IUserCommandService userCommandService, IUserQueryService userQueryService)
         {
             _userCommandService = userCommandService;
             _userQueryService = userQueryService;
@@ -19,30 +23,21 @@ namespace TCC_System_MVC.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            var a = CookieManager.GetUserJsonByToken("TCC_System");
+
+            UserViewModel user = _userQueryService.GetForLogin(a.Email);
+
+            @ViewBag.Claims = new SelectList(new List<int> { 1 }, 1);
+
+            return View(user);
         }
-        [HttpGet]
-        public ActionResult NewUser()
+        [HttpPut]
+        public JsonResult User(UserViewModel view)
         {
-            @ViewBag.Claims = new SelectList(new List<int>{ 1 }, 1);
+            Cookie(_userQueryService, view);
 
-            return View();
-        }
+            _userCommandService.Update(view, view.Name);
 
-        [HttpGet]
-        public ActionResult Logout()
-        {
-
-            CookieRemove();
-
-            return View("index");
-        }
-
-        [HttpPost]
-        public JsonResult Login(UserViewModel view)
-        {
-            _userCommandService.Login(view);
-            
             var results = JsonNotification();
 
             if (results.Data.ToString().Contains("SUCCESS"))
@@ -56,12 +51,13 @@ namespace TCC_System_MVC.Controllers
 
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
+
         }
 
-        [HttpPost]
-        public JsonResult NewUser(UserViewModel view)
+        [HttpPut]
+        public JsonResult UserPW(UserViewModel view)
         {
-            _userCommandService.Insert(view, "System");
+            _userCommandService.PutPassWord(view);
 
             var results = JsonNotification();
 
@@ -71,7 +67,8 @@ namespace TCC_System_MVC.Controllers
 
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
+
         }
-        
+
     }
 }

@@ -12,6 +12,7 @@ namespace TCC_System_Application.ManagementServices
         void Active(int id, string user);
         void RemoveClaim(int idSite, int idMachine, string user);
         void Login(UserViewModel view);
+        void PutPassWord(UserViewModel view);
     }
 
     public class UserCommandService : ApplicationService, IUserCommandService
@@ -33,6 +34,7 @@ namespace TCC_System_Application.ManagementServices
                     AssertionConcern.AssertNotification("Algo esta incorreto.");
                 }
             }
+
         }
 
         public void Insert(UserViewModel view, string user)
@@ -64,9 +66,8 @@ namespace TCC_System_Application.ManagementServices
         {
             User obj = Repository.FindByID(view.Id);
 
-            if (view.Claims != null)
-                obj.AddClaimsList(view.Claims);
-
+            obj.SetName(view.Name);
+                       
             Repository.Update(obj);
 
             if (Commit(user))
@@ -77,6 +78,29 @@ namespace TCC_System_Application.ManagementServices
             {
                 AssertionConcern.AssertNotification("Erro na Atualização");
             }
+        }
+
+        public void PutPassWord(UserViewModel view)
+        {
+            User obj = Repository.FindByID(view.Id);
+
+            if(obj.Password == view.OldPassword)
+            {
+                obj.SetPassWord(view.NewPassword);
+            }
+            else
+            {
+                AssertionConcern.AssertNotification("Senha atual digitada incorretamente.");
+            }
+
+            Repository.Update(obj);
+            if (!Commit(obj.Name))
+            {
+                AssertionConcern.AssertNotification("Erro da senha, tente novamente mais tarte");
+
+            }
+
+
         }
         public void Disable(int id, string user)
         {

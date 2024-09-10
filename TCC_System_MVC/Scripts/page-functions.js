@@ -61,6 +61,40 @@ function PostForm(form, url, successCallback, resetForm) {
     }
 }
 
+
+function PutForm(form, url, successCallback, resetForm) {
+
+    $(".needs-validation").removeClass("was-validated");
+
+    if (form.checkValidity()) {
+        Load(form.Save)
+        $.ajax({
+            url: url,
+            type: 'PUT',
+            data: new FormData(form),
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                successCallback(result);
+                if (resetForm) {
+                    form.reset();
+                }
+            },
+            error: function (xhr) {
+                toastr["error"]("An error occured: " + xhr.status + " " + xhr.statusText);
+            },
+            complete: function () {
+                Load(form.Save)
+            }
+        });
+        return false;
+
+    }
+    else {
+        $('.needs-validation').addClass("was-validated");
+    }
+}
 function PostFormFile(form, url, successCallback, resetForm) {
 
     $(".needs-validation").removeClass("was-validated");
