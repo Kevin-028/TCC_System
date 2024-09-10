@@ -184,8 +184,8 @@
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel" />
-    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=6.5.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.6.5.1\lib\net461\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=6.7.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.6.7.1\lib\net461\System.IdentityModel.Tokens.Jwt.dll</HintPath>
     </Reference>
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
@@ -272,6 +272,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Core\ClaimsAuthorizeAttribute.cs" />
     <Compile Include="Core\CookieManager.cs" />
     <Compile Include="Global.asax.cs">
@@ -281,6 +282,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\IMG\Logo_Pato.gif" />
+    <Content Include="Content\IMG\Person.png" />
     <Content Include="Content\style.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
@@ -793,6 +795,9 @@
     <Content Include="Views\Shared\_SemLayout.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Login\NewUser.cshtml" />
+    <Content Include="Views\User\index.cshtml" />
+    <Content Include="Views\User\_Edit.cshtml" />
+    <Content Include="Views\User\_Overview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

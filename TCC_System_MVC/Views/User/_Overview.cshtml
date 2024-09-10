@@ -1,0 +1,11 @@
+﻿@model  TCC_System_Application.ManagementServices.UserViewModel
+
+<div class="row">
+    @Html.LabelFor(model => model.Name, new { @class = "col-lg-3 col-md-4 label"}) :
+    @Html.DisplayFor(model => model.Name, new { @class = "form-label" })
+</div>
+
+<div class="col-12">
+    @Html.LabelFor(model => model.Email, new { @class = "form-label" }) :
+    @Html.DisplayFor(model => model.Email, new { @class = "form-control", required = "required" })
+</div>

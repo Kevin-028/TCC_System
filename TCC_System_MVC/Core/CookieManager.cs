@@ -2,6 +2,7 @@
 using System.Web;
 using TCC_System_Domain.Core.Auth.JsonObjects;
 using TCC_System_Domain.Core;
+using TCC_System_Domain.Management;
 
 namespace TCC_System_MVC.Core
 {
@@ -24,6 +25,18 @@ namespace TCC_System_MVC.Core
 
             return cookie;
         }
+        public static HttpCookie RemoveCookie()
+        {
+            // Criação do Cookie para envio ao navegador.
+            HttpCookie cookie = new HttpCookie(TokenManager.GetTokenKey()) { };
+
+            //Set Token Expiration
+            TimeSpan somaTempo = new TimeSpan(0, 0, 0, 1);
+            cookie.Expires = DateTime.Now + somaTempo;
+
+            return cookie;
+        }
+
 
         public static UserJson GetUserJsonByToken(string sistema)
         {
