@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using TCC_System_Domain.Arduino;
 using TCC_System_Domain.Management;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -10,6 +11,9 @@ namespace TCC_System_Data
     {
 
         public DbSet<User> Users{get; set;}
+        public DbSet<Product> Products{get; set;}
+        public DbSet<Module> Modules{get; set;}
+        public DbSet<MessageAction> MessageActions{get; set;}
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
