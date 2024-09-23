@@ -27,7 +27,7 @@ namespace TCC_System_Data.EntityConfig
             builder.Property(x => x.RecordCreationDate).HasColumnType("DATETIME");
             builder.Property(x => x.RecordUpdateDate).HasColumnType("DATETIME");
 
-            builder.ToTable("Modulo");
+            builder.ToTable("Ardu_Modulo");
         }
     }
 }

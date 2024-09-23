@@ -10,7 +10,7 @@ namespace TCC_System_Domain.Arduino
     {
         public Guid Id { get; private set; }
         public string Name { get; private set; }
-        public int UserID { get; private set; }
+        public int UserId { get; private set; }
 
 
 
@@ -18,22 +18,20 @@ namespace TCC_System_Domain.Arduino
         public IReadOnlyCollection<Module> ProductModeles => _productModeles;
 
         protected Product() { }
-        public Product(Guid id, int userId, string name)
+        public Product(int userId, string name)
         {
             _productModeles = new List<Module>();
-
-            SetId(id);
             SetUser(userId);
             SetName(name);
         }
 
-        public void SetId(Guid id)
+        public void SetId()
         {
-            this.Id = EntityValidation.SetGuidProperty(id, "Id ");
+            this.Id = Guid.NewGuid();
         }
         public void SetUser(int userId)
         {
-            this.UserID = userId;
+            this.UserId = userId;
         }
         public void SetName(string name)
         { 

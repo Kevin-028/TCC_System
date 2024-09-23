@@ -1,4 +1,7 @@
-﻿using TCC_System_Application.ManagementServices;
+﻿using System.Threading.Tasks;
+using TCC_System_Application.ArduinoService;
+using TCC_System_Application.ManagementServices;
+using TCC_System_Domain.Arduino;
 using TCC_System_Domain.Core.Auth.JsonObjects;
 using TCC_System_Domain.Management;
 
@@ -17,7 +20,10 @@ namespace TCC_System_Application
                 Email = user.Email,
                 Name = user.Nome
             };
-
+        }
+        public static Product ToProduct(ProductViewModel view)
+        {
+            return new Product(view.userId, view.Name);
         }
 
     }

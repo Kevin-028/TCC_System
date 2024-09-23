@@ -12,7 +12,7 @@ namespace TCC_System_MVC
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "login", action = "Index", id = UrlParameter.Optional }
             );
         }
     }
