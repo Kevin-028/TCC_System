@@ -12,7 +12,7 @@ namespace TCC_System_MVC.Controllers
     {
         private readonly IProductCommandService _productCommandService;
 
-        public ProductController(IProductCommandService command) 
+        public ProductController(IProductCommandService command)
         {
             _productCommandService = command;
         }
@@ -22,6 +22,17 @@ namespace TCC_System_MVC.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public async Task<ActionResult> Product() 
+        {
+
+            var products = await _productCommandService.GetProductByLogin(UserLogin());
+
+
+            return View(products);
+        }
+
 
 
         [HttpPost]
@@ -37,10 +48,6 @@ namespace TCC_System_MVC.Controllers
 
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
-        }
-        
-
-
-
+        }  
     }
 }

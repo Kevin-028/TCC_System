@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using TCC_System_Application.ManagementServices.Query;
 using TCC_System_Domain.Arduino;
 using TCC_System_Domain.Arduino.Repositories;
 using TCC_System_Domain.Core;
@@ -11,15 +14,21 @@ namespace TCC_System_Application.ArduinoService
         Task Insert(ProductViewModel view, string user);
         Task Update(ProductViewModel view, string user);
         Task Delete(Guid id);
+        Task<List<ProductViewModel>> GetProductByLogin(string loginId);
     }
 
     public class ProductCommandService : ApplicationService, IProductCommandService
     {
         private readonly IProductRepository _productRepository;
+        private readonly IUserQueryService _userQueryService;
 
-        public ProductCommandService(IUnitOfWork unitOfWork, IProductRepository repository): base(unitOfWork)
+        public ProductCommandService( IUnitOfWork unitOfWork
+            , IProductRepository repository
+            , IUserQueryService userQuery )
+        : base(unitOfWork)
         {
             _productRepository = repository;
+            _userQueryService = userQuery;
         }
 
         public async Task Insert(ProductViewModel view, string user) 
@@ -52,6 +61,16 @@ namespace TCC_System_Application.ArduinoService
             _productRepository.Delete(obj);
 
             Commit();
+        }
+
+        public async Task<List<ProductViewModel>> GetProductByLogin(string loginId)
+        {
+
+            var obj = await _productRepository.GetProductByLogin(_userQueryService.GetUsersByLogin(loginId).Id);
+
+            var list = await Task.WhenAll(obj.Select(p => Adapter.ToProductVM(p)));
+
+            return list.ToList();
         }
     }
 }

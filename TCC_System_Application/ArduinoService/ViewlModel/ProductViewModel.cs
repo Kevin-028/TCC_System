@@ -13,9 +13,9 @@ namespace TCC_System_Application.ArduinoService
 
         [Display(Name = "Nome")]
         public string Name { get; set; }
-        public int userId { get; set; }
+        public int UserId { get; set; }
 
 
-        List<ModuleViewModel> modules { get; set; }
+        public List<ModuleViewModel> Modules { get; set; }
     }
 }

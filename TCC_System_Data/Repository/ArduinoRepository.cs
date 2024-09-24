@@ -1,6 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TCC_System_Domain.Arduino;
 using TCC_System_Domain.Arduino.Repositories;
 
@@ -13,6 +16,8 @@ namespace TCC_System_Data
         {
 
         }
+       
+
         public Product GetProduct(Guid id)
         {
             return Context.Products.Find(id);
@@ -27,6 +32,12 @@ namespace TCC_System_Data
                 .Include(x => x.ProductModeles)
                 .Where(x => x.Id == id)
                 .SingleOrDefault();
+        }
+        public async Task<IEnumerable<Product>> GetProductByLogin(int loginId)
+        {
+            return Context.Products
+                .Include(x => x.ProductModeles)
+                .Where(x => x.UserId == loginId);
         }
     }
 }

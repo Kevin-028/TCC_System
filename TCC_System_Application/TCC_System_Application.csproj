@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="AppEvents\" />
-    <Folder Include="ArduinoService\Query\" />
     <Folder Include="ManagementServices\Query\" />
   </ItemGroup>
 
