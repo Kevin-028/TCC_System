@@ -799,7 +799,9 @@
     <Content Include="Views\User\index.cshtml" />
     <Content Include="Views\User\_Edit.cshtml" />
     <Content Include="Views\User\_Overview.cshtml" />
-    <Content Include="Views\Product\View.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Product\_ModuleRF.cshtml" />
+    <Content Include="Views\Product\_Product.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

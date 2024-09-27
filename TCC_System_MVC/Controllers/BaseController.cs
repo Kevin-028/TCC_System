@@ -91,7 +91,7 @@ namespace TCC_System_MVC.Controllers
             {
                 UserJson user = GetCookie();
 
-                var UserName = user.Nome;
+                var UserName = user.Nome.ToString();
 
                 return Content(UserName);
             }
@@ -101,12 +101,39 @@ namespace TCC_System_MVC.Controllers
             }
         }
         [ChildActionOnly]
+        public string UserNameString()
+        {
+            try
+            {
+                UserJson user = GetCookie();
+
+                var UserName = user.Nome.ToString();
+
+                return UserName;
+            }
+            catch (System.Exception)
+            {
+                return null;
+            }
+        }
+
+
+        [ChildActionOnly]
         public string UserLogin()
         {
 
             UserJson user = GetCookie();
 
-            return user.Login.ToString();
+            if(user != null)
+            {
+                return user.Login.ToString();
+            }
+            else
+            {
+                return null;
+            }
+
+
 
         }
         public void Cookie(IUserQueryService _userQueryService, UserViewModel view)

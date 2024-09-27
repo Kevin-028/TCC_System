@@ -132,7 +132,7 @@ function PostFormFile(form, url, successCallback, resetForm) {
 }
 function PostData(data, url, botao, successCallback) {
 
-    Load(botao.Save);
+    Load(botao);
 
     $.ajax({
         url: url,
@@ -148,13 +148,14 @@ function PostData(data, url, botao, successCallback) {
             toastr["error"]("An error occured: " + xhr.status + " " + xhr.statusText);
         },
         complete: function () {
-            Load(botao.Save);
+            Load(botao);
         }
 
     });
 }
 
 function GetData(url, data, successCallback) {
+
     $.ajax({
         url: url,
         type: 'GET',

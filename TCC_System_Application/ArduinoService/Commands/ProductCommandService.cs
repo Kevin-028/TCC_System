@@ -15,6 +15,8 @@ namespace TCC_System_Application.ArduinoService
         Task Update(ProductViewModel view, string user);
         Task Delete(Guid id);
         Task<List<ProductViewModel>> GetProductByLogin(string loginId);
+
+        Task InsertModule(ModuleViewModel view, string user);
     }
 
     public class ProductCommandService : ApplicationService, IProductCommandService
@@ -32,14 +34,29 @@ namespace TCC_System_Application.ArduinoService
         }
 
         public async Task Insert(ProductViewModel view, string user) 
-        { 
+        {
+            view.UserId = _userQueryService.GetUsersByLogin(user).Id;
+
             Product obj = Adapter.ToProduct(view);
 
             obj.SetId();
-
+            
             _productRepository.Insert(obj);
 
             Commit(user);         
+        }
+        public async Task InsertModule(ModuleViewModel view, string user)
+        {
+            Product obj = _productRepository.GetProductModules(view.ProjectId);
+
+            obj.AddModule(Adapter.ToModule(view));
+
+            _productRepository.Update(obj);
+
+            if (!Commit(user))
+            {
+                AssertionConcern.AssertNotification("Erro no cadastro no novo modulo");
+            }
         }
 
 

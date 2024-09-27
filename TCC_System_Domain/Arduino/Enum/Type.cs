@@ -8,6 +8,7 @@ namespace TCC_System_Domain.Arduino
     {
         FacialReader,// leitor facial
         FingerprintReader,// leitor de digital
-        RFID // modulo RFID
+        RFID, // modulo RFID
+        System
     }
 }

@@ -83,7 +83,7 @@ namespace TCC_System_Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Modulo");
+                    b.ToTable("Ardu_Modulo");
                 });
 
             modelBuilder.Entity("TCC_System_Domain.Arduino.Product", b =>
@@ -106,7 +106,7 @@ namespace TCC_System_Data.Migrations
                     b.Property<string>("RecordUpdatedBy")
                         .HasColumnType("VARCHAR(30)");
 
-                    b.Property<int>("UserID")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

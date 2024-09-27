@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace TCC_System_Application.ArduinoService
 {
     public class ModuleViewModel
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
+        public Guid ProjectId { get; set; }
+        public Guid ModuleId { get; set; }
         public string Type { get; set; }
-        public string value { get; set; }
 
+        [Display(Name = "Codigo do RFID")]
+        public string value { get; set; }
 
     }
 }

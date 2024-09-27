@@ -21,6 +21,7 @@ namespace TCC_System_Domain.Arduino
         public Product(int userId, string name)
         {
             _productModeles = new List<Module>();
+
             SetUser(userId);
             SetName(name);
         }
@@ -42,10 +43,17 @@ namespace TCC_System_Domain.Arduino
         {
             EntityValidation.VerifyPropertyIsValid(module, "Modulo");
 
-            if(!_productModeles.Any(x => x.Type == module.Type))
+            module.SetId();
+
+            if (!_productModeles.Exists(x => x.Type == module.Type))
             {
                 _productModeles.Add(module);
             }
+            else
+            {
+                AssertionConcern.AssertNotification("Modulo ja existente!!");
+            }
+
         }
         public void RemoveModule(Guid guid) 
         {

@@ -13,21 +13,23 @@ namespace TCC_System_Domain.Arduino
         public Product Product { get; private set; }
 
         protected Module() { }
-        public Module(Guid id, Type type)
+        public Module(Type type,string value,Guid productId)
         {
-            SetId(id);
             SetType(type);
+            SetValue(value);
+            SetProductID(productId);
         }
         public void SetType(Type type) => this.Type = type;
 
 
-        public void SetId(Guid guid)
+        public void SetId()
         {
-            this.Id = EntityValidation.SetGuidProperty(guid, "Id ");
+            this.Id = Guid.NewGuid();
         }
         public void SetValue(string value)
         { 
             this.Value = value;
         }
+        public void SetProductID(Guid id) => this.ProductId = id;
     }
 }
