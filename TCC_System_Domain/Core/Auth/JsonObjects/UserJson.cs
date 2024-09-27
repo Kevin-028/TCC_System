@@ -11,18 +11,20 @@ namespace TCC_System_Domain.Core.Auth.JsonObjects
         public string Login { get; set; }
         public string Nome { get; set; }
         public string Email { get; set; }
-
+        public int Id { get; set; }
         private string[] _claims;
 
         public UserJson()
         {
         }
 
-        public UserJson(string login, string nome, string email)
+        public UserJson(string login, string nome, string email, int id)
         {
-            Login = login;
-            Nome = nome;
-            Email = email;
+
+            this.Login = login;
+            this.Nome = nome;
+            this.Email = email;
+            this.Id = id;
         }
 
         public string Claims
@@ -43,28 +45,6 @@ namespace TCC_System_Domain.Core.Auth.JsonObjects
         public void SetListClaims(List<string> claims)
         {
             _claims = claims.ToArray();
-        }
-        public bool AccessAvaliadorSite()
-        {
-            List<string> acessos = new List<string>()
-            {
-                "ADM",
-                "ALTA DIRECAO",
-                "AVALIADOR",
-                "VERIFICADOR",
-                "ALTA DIRECAO",
-                "ADM"
-            };
-
-            if (acessos.Any(access => _claims.Contains(access)))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
         }
 
         public bool UsuarioPossuiClaim(string claim)

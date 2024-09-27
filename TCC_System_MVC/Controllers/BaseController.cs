@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using TCC_System_Application.ManagementServices;
 using TCC_System_Application.ManagementServices.Query;
 using TCC_System_Domain.Core;
+using TCC_System_Domain.Core.Auth.JsonObjects;
 using TCC_System_MVC.Core;
 
 namespace TCC_System_MVC.Controllers
@@ -77,16 +78,20 @@ namespace TCC_System_MVC.Controllers
                 return sw.GetStringBuilder().ToString();
             }
         }
+        public UserJson GetCookie()
+        {
+            return CookieManager.GetUserJsonByToken("TCC_System");
+        }
+
 
         [ChildActionOnly]
         public ContentResult UserName()
         {
-
             try
             {
-                var a = CookieManager.GetUserJsonByToken("TCC_System");
+                UserJson user = GetCookie();
 
-                var UserName = a.Nome;
+                var UserName = user.Nome.ToString();
 
                 return Content(UserName);
             }
@@ -95,7 +100,42 @@ namespace TCC_System_MVC.Controllers
                 return Content("Visitor");
             }
         }
+        [ChildActionOnly]
+        public string UserNameString()
+        {
+            try
+            {
+                UserJson user = GetCookie();
 
+                var UserName = user.Nome.ToString();
+
+                return UserName;
+            }
+            catch (System.Exception)
+            {
+                return null;
+            }
+        }
+
+
+        [ChildActionOnly]
+        public string UserLogin()
+        {
+
+            UserJson user = GetCookie();
+
+            if(user != null)
+            {
+                return user.Login.ToString();
+            }
+            else
+            {
+                return null;
+            }
+
+
+
+        }
         public void Cookie(IUserQueryService _userQueryService, UserViewModel view)
         {
 

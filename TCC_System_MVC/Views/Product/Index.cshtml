@@ -1,0 +1,200 @@
+﻿@model List<TCC_System_Application.ArduinoService.ProductViewModel>
+
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="section">
+    <div class="row">
+        <div class="container container-fluid">
+            <div class="row">
+                <div class="col">
+                    <button id="NewProject" type="button" class="btn btn-primary">Novo Projeto</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container container-fluid mt-3">
+            <div class="row">
+                <div class="col">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+@if (Model != null)
+{
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Projetos Existentes: @Model.Count()</h5>
+            <!-- Table with stripped rows -->
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Nome do Projeto</th>
+                        <th scope="col">Codigo API</th>
+                        <th scope="col">Modulo RFID</th>
+                        <th scope="col">Modulo Biometria</th>
+                        <th scope="col">Modulo Leitura Facial</th>
+                    </tr>
+                </thead>
+                <tbody class="">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">
+                                @item.Name
+                            </th>
+                            <td>
+                                @item.Id
+                            </td>
+                            <td>
+                                @if (item.Modules.Any(a => a.Type == "RFID"))
+                                {
+                                    <button id="Save" class="btn btn-success modulos" type="button" data-idmodulo="@item.GetModelesType("RFID")"  data-type="RFID">
+                                        <i class="bx bx-memory-card text-white"></i>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button id="Save" class="btn btn-outline-warning modulos" type="button" data-id="@item.Id" data-type="RFID">
+                                        <span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>
+                                        <i class="bi bi-plus text-dark"></i>
+                                        <i class="bx bx-memory-card text-success"></i>
+                                    </button>
+                                }
+                            </td>
+                            <td>
+                                @if (item.Modules.Any(a => a.Type == "FingerprintReader"))
+                                {
+
+                                    <button class="btn btn-success" type="button" data-idModulo="@item.GetModelesType("FingerprintReader")">
+                                        <i class="ri-fingerprint-fill text-dark"></i>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button id="Save" class="btn btn-outline-warning modulos" type="button" data-id="@item.Id" data-type="FingerprintReader">
+                                        <span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>
+                                        <i class="bi bi-plus text-dark"></i>
+                                        <i class="ri-fingerprint-fill text-dark"></i>
+                                    </button>
+                                }
+                            </td>
+                            <td>
+                                @if (item.Modules.Any(a => a.Type == "FacialReader"))
+                                {
+                                    <button class="btn btn-success" type="button" data-idModulo="@item.GetModelesType("FacialReader")">
+                                        <i class="ri-fingerprint-fill text-dark"></i>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button id="Save" class="btn btn-outline-warning modulos" type="button" data-id="@item.Id" data-type="FacialReader">
+                                        <span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>
+
+                                        <i class="bi bi-plus text-dark"></i>
+                                        <i class="ri-fingerprint-fill text-dark"></i>
+                                    </button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <!-- End Table with stripped rows -->
+        </div>
+    </div>
+
+}
+
+
+<div class="modal fade" id="Modal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="replaceTarget">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- End Modal Dialog Scrollable-->
+
+
+
+
+@section scripts{
+    <script>
+
+
+        $(document).on('click', "#NewProject", function (e) {
+            $('#Modal').modal('show')
+
+            GetData('@Url.Action("GetProductView", "Product", null,Request.Url.Scheme)', null, SuccessCallback);
+
+            function SuccessCallback(result) {
+                RenderPartial(result, $("#replaceTarget"));
+            };
+
+        });
+        $(document).on('click', "#Save.newProject", function (e) {
+
+             PostForm(this.form, '@Url.Action("Product", "Product", null,Request.Url.Scheme)', SuccessCallback, false);
+
+            function SuccessCallback(result) {
+                RenderPartial("", $("#replaceTarget"));
+                $('#Modal').modal('hide')
+            };
+
+        });
+
+
+        $(document).on('click', "#Save.modulos", function (e) {
+
+            var data = new Object();
+
+            data.ProjectId = this.dataset.id
+            data.ModuleId = this.dataset.idmodulo
+            data.Type = this.dataset.type
+            
+
+            GetData('@Url.Action("GetModuleVM", "Product", Request.Url.Scheme)', data, SuccessCallback, false);
+
+            function SuccessCallback(result) {
+                $('#Modal').modal('show')
+                RenderPartial(result, $("#replaceTarget"));
+
+            };
+        });
+
+        $(document).on('click', "#Save.Rfid", function (e) {
+            console.log(this.form)
+
+             PostForm(this.form, '@Url.Action("PostModule", "Product", null,Request.Url.Scheme)', SuccessCallback, false);
+
+            function SuccessCallback(result) {
+                RenderPartial("", $("#replaceTarget"));
+                $('#Modal').modal('hide')
+
+            };
+
+        });
+
+        //$('#Modal').modal('hide')
+
+
+
+
+
+    </script>
+}

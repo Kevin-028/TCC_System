@@ -272,6 +272,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Core\ClaimsAuthorizeAttribute.cs" />
     <Compile Include="Core\CookieManager.cs" />
@@ -798,6 +799,9 @@
     <Content Include="Views\User\index.cshtml" />
     <Content Include="Views\User\_Edit.cshtml" />
     <Content Include="Views\User\_Overview.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Product\_ModuleRF.cshtml" />
+    <Content Include="Views\Product\_Product.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

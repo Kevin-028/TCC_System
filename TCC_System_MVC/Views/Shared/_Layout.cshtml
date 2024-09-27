@@ -15,10 +15,7 @@
     <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="~/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     <link href="~/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="~/vendor/quill/quill.snow.css" rel="stylesheet">
-    <link href="~/vendor/quill/quill.bubble.css" rel="stylesheet">
     <link href="~/vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="~/vendor/simple-datatables/style.css" rel="stylesheet">
 
     <!-- Template Main CSS File -->
     <link href="~/Content/style.css" rel="stylesheet">
@@ -234,15 +231,20 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link " href="index.html">
+                <a class="nav-link " href="@Url.Action("", "Home")">
                     <i class="bi bi-grid"></i>
-                    <span>Dashboard</span>
+                    <span>home</span>
                 </a>
             </li><!-- End Dashboard Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-gem"></i><span>Icons</span><i class="bi bi-chevron-down ms-auto"></i>
+                <a class="nav-link " href="@Url.Action("", "Product")">
+                    <i class="bi bi-grid"></i>
+                    <span>Projetos</span>
+                </a>
+
+                @*<a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-gem"></i><span>Projetos</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
@@ -260,7 +262,7 @@
                             <i class="bi bi-circle"></i><span>Boxicons</span>
                         </a>
                     </li>
-                </ul>
+                </ul>*@
             </li><!-- End Icons Nav -->
 
 

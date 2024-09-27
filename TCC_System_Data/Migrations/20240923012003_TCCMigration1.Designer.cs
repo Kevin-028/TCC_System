@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TCC_System_Data;
 
 namespace TCC_System_Data.Migrations
 {
     [DbContext(typeof(TCC_Context))]
-    partial class TCC_ContextModelSnapshot : ModelSnapshot
+    [Migration("20240923012003_TCCMigration1")]
+    partial class TCCMigration1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,7 +85,7 @@ namespace TCC_System_Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Ardu_Modulo");
+                    b.ToTable("Modulo");
                 });
 
             modelBuilder.Entity("TCC_System_Domain.Arduino.Product", b =>
@@ -106,7 +108,7 @@ namespace TCC_System_Data.Migrations
                     b.Property<string>("RecordUpdatedBy")
                         .HasColumnType("VARCHAR(30)");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("UserID")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

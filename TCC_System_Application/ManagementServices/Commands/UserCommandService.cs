@@ -56,11 +56,10 @@ namespace TCC_System_Application.ManagementServices
             }
 
 
-            if (Commit(user)) { }
-            else
-            {
+            if (!Commit(user)) {
                 AssertionConcern.AssertNotification("Erro no cadastro");
             }
+ 
         }
         public void Update(UserViewModel view, string user)
         {

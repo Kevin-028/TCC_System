@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Folder Include="Core\Resources\" />
+    <Folder Include="Blog\" />
   </ItemGroup>
 
   <ItemGroup>
