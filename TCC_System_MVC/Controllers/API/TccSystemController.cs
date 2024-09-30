@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web.Http;
 using TCC_System_Application.ArduinoService;
 using TCC_System_Application.ArduinoService.Query;
 
@@ -10,15 +11,26 @@ namespace TCC_System_API.Controllers
         private readonly IProductQueryService _productQueryService;
 
         public TccSystemController(IProductCommandService command, IProductQueryService productQueryService)
-        {
+         {
             _productCommandService = command;
             _productQueryService = productQueryService;
         }
 
-        // GET api/values/5
-        public string Get(int id)
+        [HttpGet]
+        // GET api/values
+        public ProductViewModel Project(string id)
         {
-            return "value";
+            var a = _productQueryService.Geteste(Guid.Parse(id));          
+            return a;
+        }
+        // GET api/values
+        [HttpGet]
+        public ProductViewModel ProjectModule(string id)
+        {
+
+            var a = _productQueryService.GetProductModel(Guid.Parse(id));
+            
+            return a;
         }
 
         // POST api/values
@@ -35,6 +47,11 @@ namespace TCC_System_API.Controllers
         public void Delete(int id)
         {
         }
+
+        // Estilo de vida assíncrono para suportar requisições Web API e MVC
+        //container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
+
+
 
     }
 }

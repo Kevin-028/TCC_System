@@ -1,11 +1,11 @@
 using System.Web.Http;
 using WebActivatorEx;
-using TCC_System_API;
+using TCC_System_MVC;
 using Swashbuckle.Application;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
-namespace TCC_System_API
+namespace TCC_System_MVC
 {
     public class SwaggerConfig
     {
@@ -32,7 +32,7 @@ namespace TCC_System_API
                         // hold additional metadata for an API. Version and title are required but you can also provide
                         // additional fields by chaining methods off SingleApiVersion.
                         //
-                        c.SingleApiVersion("v1", "TCC_System_API");
+                        c.SingleApiVersion("v1", "TCC_System_MVC");
 
                         // If you want the output Swagger docs to be indented properly, enable the "PrettyPrint" option.
                         //
