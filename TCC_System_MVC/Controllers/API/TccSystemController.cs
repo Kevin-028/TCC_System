@@ -16,42 +16,12 @@ namespace TCC_System_API.Controllers
             _productQueryService = productQueryService;
         }
 
-        [HttpGet]
-        // GET api/values
-        public ProductViewModel Project(string id)
-        {
-            var a = _productQueryService.Geteste(Guid.Parse(id));          
-            return a;
-        }
         // GET api/values
         [HttpGet]
         public ProductViewModel ProjectModule(string id)
         {
-
-            var a = _productQueryService.GetProductModel(Guid.Parse(id));
-            
-            return a;
+            return _productQueryService.GetProductModel(Guid.Parse(id));
         }
-
-        // POST api/values
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/values/5
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        public void Delete(int id)
-        {
-        }
-
-        // Estilo de vida assíncrono para suportar requisições Web API e MVC
-        //container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
-
-
 
     }
 }

@@ -14,7 +14,6 @@ namespace TCC_System_Application.ArduinoService.Query
     {
         Task<ModuleViewModel> GetModelById(Guid id);
         ProductViewModel GetProductModel(Guid id);
-        ProductViewModel Geteste(Guid id);
 
     }
 
@@ -41,30 +40,8 @@ namespace TCC_System_Application.ArduinoService.Query
 
             return _repository.GetDbConnection().Query<ModuleViewModel>(sql, new { id });
         }
+
         public ProductViewModel GetProductModel(Guid id)
-        {
-            string sql = CreateSQLQueryProduct() + " WHERE id = @id";
-
-            var project = _repository.GetDbConnection().QueryFirstOrDefault<ProductViewModel>(sql, new {id});
-
-            IEnumerable<ModuleViewModel> modules = GetModelByIdProduct(id);
-
-            project.Modules = project.Modules ?? new List<ModuleViewModel>();
-
-            foreach (var item in modules)
-            {
-                project.Modules.Add(new ModuleViewModel
-                {
-                    ModuleId = item.ModuleId,
-                    ProjectId = item.ProjectId,
-                    Type = item.Type,
-                    value = item.value
-                });
-            }
-
-            return project;
-        }
-        public ProductViewModel Geteste(Guid id)
         {
             // Consulta SQL para obter o produto e os módulos associados
             string sql = CreateSQLQueryProduct() + " WHERE id = @id; " +
@@ -90,6 +67,7 @@ namespace TCC_System_Application.ArduinoService.Query
 
                 return product;
             }
+
         }
 
 
