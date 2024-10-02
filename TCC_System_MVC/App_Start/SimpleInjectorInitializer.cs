@@ -7,6 +7,9 @@ using SimpleInjector.Integration.Web.Mvc;
 using System.Reflection;
 using System.Web.Mvc;
 using WebActivatorEx;
+using SimpleInjector.Integration.WebApi;
+using SimpleInjector.Lifestyles;
+using System.Web.Http;
 
 [assembly: PostApplicationStartMethod(typeof(SimpleInjectorInitializer), "Initialize")]
 namespace TCC_System_MVC.App_Start
@@ -26,6 +29,23 @@ namespace TCC_System_MVC.App_Start
 
             DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(container));
             DomainEvent.Container = new DomainEventsContainer(DependencyResolver.Current);
+
+
+
+            // Cria e configura o contêiner para API
+            var apiContainer = new Container();
+            apiContainer.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
+
+            apiContainer.RegisterWebApiControllers(GlobalConfiguration.Configuration);
+            DomainEvent.Container = new DomainEventsContainer(DependencyResolver.Current);
+
+            InitializeContainer(apiContainer);
+            apiContainer.Verify();
+
+            // Integra o contêiner com a Web API
+            GlobalConfiguration.Configuration.DependencyResolver =
+                new SimpleInjectorWebApiDependencyResolver(apiContainer);
+
         }
 
         private static void InitializeContainer(Container container)
