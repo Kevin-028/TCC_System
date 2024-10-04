@@ -18,13 +18,7 @@ namespace TCC_System_Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
-            //optionsBuilder.UseSqlServer(@"data source=127.0.0.1;initial catalog=tcc_system; persist security info=False;user id=root;workstation id=127.0.0.1;packet size=4096;Connect Timeout=90;max pool size=1500");
-
-            //optionsBuilder.UseSqlServer(@"data source=localhost\SQLEXPRESS;initial catalog=tcc_system; persist security info=False;password=Cozido#9;user id=Root;workstation id=localhost\SQLEXPRESS;packet size=4096;Connect Timeout=90;max pool size=1500");
-            //optionsBuilder.UseSqlServer(@"data source=localhost\SQLEXPRESS;initial catalog=tcc_system; persist security info=False;user id=Tcc");
             optionsBuilder.UseSqlServer(@"data source=localhost\SQLEXPRESS;initial catalog=tcc_system;user id=Tcc; Trusted_Connection=True;TrustServerCertificate=True");
-
 
         }
 

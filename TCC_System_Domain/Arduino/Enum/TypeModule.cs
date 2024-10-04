@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TCC_System_Domain.Arduino
 {
-    public enum Type : int
+    public enum TypeModule : int
     {
         FacialReader,// leitor facial
         FingerprintReader,// leitor de digital

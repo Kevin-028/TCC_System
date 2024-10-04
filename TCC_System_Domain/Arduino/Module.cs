@@ -6,20 +6,20 @@ namespace TCC_System_Domain.Arduino
     public class Module : Entity, IAggregateRoot
     {
         public Guid Id { get; private set; }
-        public Type Type { get; private set; }
+        public TypeModule Type { get; private set; }
         public string Value { get;private set; }
 
         public Guid ProductId { get; private set; }
         public Product Product { get; private set; }
 
         protected Module() { }
-        public Module(Type type,string value,Guid productId)
+        public Module(TypeModule type,string value,Guid productId)
         {
             SetType(type);
             SetValue(value);
             SetProductID(productId);
         }
-        public void SetType(Type type) => this.Type = type;
+        public void SetType(TypeModule type) => this.Type = type;
 
 
         public void SetId()

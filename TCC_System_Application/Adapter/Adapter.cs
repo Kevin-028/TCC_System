@@ -3,10 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using TCC_System_Application.ArduinoService;
 using TCC_System_Application.ManagementServices;
+using TCC_System_Application.Mensageria;
 using TCC_System_Domain.Arduino;
 using TCC_System_Domain.Core.Auth.JsonObjects;
 using TCC_System_Domain.Management;
-using Type = TCC_System_Domain.Arduino.Type;
 
 namespace TCC_System_Application
 {
@@ -22,7 +22,7 @@ namespace TCC_System_Application
         }
         public static Module ToModule(ModuleViewModel view)
         {
-            return new Module((Type)Enum.Parse(typeof(Type), view.Type), view.value,view.ProjectId);
+            return new Module((TypeModule)Enum.Parse(typeof(TypeModule), view.Type), view.value,view.ProjectId);
         }
 
         public static ModuleViewModel ToModuleVM(Module obj)
@@ -53,6 +53,16 @@ namespace TCC_System_Application
                 Name = user.Nome,
                 Id = user.Id
             };
+        }
+
+        public static MessageAction ToMessageAction(MessageVM view)
+        {
+            TypeModule type = (TypeModule)Enum.Parse(typeof(TypeModule), view.Type);
+            Code code = (Code)Enum.Parse(typeof(Code), view.Action);
+
+            MessageAction obj = new MessageAction(view.Id, type, code);
+
+            return obj;
         }
     }
 }

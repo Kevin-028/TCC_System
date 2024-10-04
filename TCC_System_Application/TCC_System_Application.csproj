@@ -7,6 +7,7 @@
   <ItemGroup>
     <Folder Include="AppEvents\" />
     <Folder Include="ManagementServices\Query\" />
+    <Folder Include="Mensageria\Query\" />
   </ItemGroup>
 
   <ItemGroup>
