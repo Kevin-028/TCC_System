@@ -7,6 +7,9 @@ namespace TCC_System_Application.Mensageria
         public Guid Id { get; set; }
         public string Type { get; set; }
         public string Action { get; set; }
+        public Guid ProjectID { get; set; }
+        public bool Active { get; set; }
+
 
     }
 }

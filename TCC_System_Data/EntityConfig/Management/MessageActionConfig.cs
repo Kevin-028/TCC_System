@@ -14,6 +14,7 @@ namespace TCC_System_Data.EntityConfig
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedNever();
 
+            builder.Property(x => x.ProjectID);
 
             builder.Property(x => x.Type).HasConversion<string>()
                 .HasColumnName("Type")

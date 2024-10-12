@@ -8,7 +8,8 @@ namespace TCC_System_Application.Mensageria
 {
     public interface IMessageCommandService
     {
-        Task Insert(MessageVM view);
+        Task Insert(MessageVM view, string user);
+        Task<MessageVM> GetMessagebyAPI(Guid project);
 
     }
 
@@ -22,7 +23,7 @@ namespace TCC_System_Application.Mensageria
             _repository = repository;
         }
 
-        public async Task Insert(MessageVM view)
+        public async Task Insert(MessageVM view, string user)
         {
            
             view.Id = Guid.NewGuid();
@@ -30,7 +31,28 @@ namespace TCC_System_Application.Mensageria
 
             _repository.Insert(obj);
 
-            Commit();
+            Commit(user);
+        }
+        public async Task<MessageVM> GetMessagebyAPI(Guid project)
+        {
+            var obj = _repository.GetByProject(project);
+
+            if (obj != null)
+            {
+                obj.SetActiveFalse();
+
+                _repository.Update(obj);
+            }
+            else
+            {
+                return null;
+            }
+
+            if (Commit())
+            {
+                return await Adapter.ToMessageVM(obj);
+            }
+            else { return null; }
         }
 
     }

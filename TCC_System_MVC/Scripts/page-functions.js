@@ -1,6 +1,10 @@
 ﻿function Load(botao) {
-    botao.children[0].classList.toggle("visually-hidden");
-    botao.children[1].classList.toggle("visually-hidden");
+    try {
+        botao.children[0].classList.toggle("visually-hidden");
+        botao.children[1].classList.toggle("visually-hidden");
+    } catch (e) {
+
+    }
 }
 function ShowJsonResult(result) {
     try {
@@ -154,7 +158,7 @@ function PostData(data, url, botao, successCallback) {
     });
 }
 
-function GetData(url, data, successCallback) {
+function GetData(url, data, successCallback, errorCallback) {
 
     $.ajax({
         url: url,
@@ -166,6 +170,8 @@ function GetData(url, data, successCallback) {
         },
         error: function (xhr) {
             toastr["error"]("An error occured: " + xhr.status + " " + xhr.statusText);
+
+            errorCallback(result);
         }
     });
 }

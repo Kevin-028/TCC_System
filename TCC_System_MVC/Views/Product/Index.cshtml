@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <section class="section">
     <div class="row">
         <div class="container container-fluid">
@@ -14,13 +15,8 @@
                 </div>
             </div>
         </div>
-
-        <div class="container container-fluid mt-3">
-            <div class="row">
-                <div class="col">
-
-                </div>
-            </div>
+        <div class="container container-fluid m-3">
+            @Html.Partial("_TestComunication", new TCC_System_Application.ArduinoService.ProductViewModel())
         </div>
     </div>
 
@@ -166,7 +162,7 @@
             data.ProjectId = this.dataset.id
             data.ModuleId = this.dataset.idmodulo
             data.Type = this.dataset.type
-            
+
 
             GetData('@Url.Action("GetModuleVM", "Product", Request.Url.Scheme)', data, SuccessCallback, false);
 
@@ -178,7 +174,6 @@
         });
 
         $(document).on('click', "#Save.Rfid", function (e) {
-            console.log(this.form)
 
              PostForm(this.form, '@Url.Action("PostModule", "Product", null,Request.Url.Scheme)', SuccessCallback, false);
 
@@ -187,14 +182,73 @@
                 $('#Modal').modal('hide')
 
             };
+        });
 
+        $(document).on('click', "#Save.Rfid.NewInfo", function (e) {
+
+             PostForm(this.form, '@Url.Action("NewMessage", "Product", null,Request.Url.Scheme)', SuccessCallback, false);
+
+            function SuccessCallback(result) {
+                ShowJsonResult(result)
+            };
         });
 
         //$('#Modal').modal('hide')
 
+        $(document).on('click', "#Save.TryComunication", function (e) {
+
+            $(this).text('Monitoramento iniciado...');
+
+            let formData = new FormData(this.form);
+            let data = {}
+
+            formData.forEach((value, key) => {
+                data[key] = value;
+            })
+
+            console.log(data)
+
+            PostForm(this.form , '@Url.Action("TryComunication", "Product", null,Request.Url.Scheme)', successCallback, false);
+
+            function successCallback(result) {
+                if (ShowJsonResult(result)) {
+
+                    monitorApi(data, '@Url.Action("GetComunication", "Product", null,Request.Url.Scheme)');
+                }
+            };
+        });
+
+        function monitorApi(data, url, attempt = 1) {
 
 
+            GetData(url, data, successCallback, errorCallback); // Inicia o monitoramento da API com a primeira tentativa
 
+            function successCallback(result){
 
+                // Verifica se a resposta é positiva
+                if (result.data.Status === "SUCCESS") {
+                    $("#Save.TryComunication").text('Sucesso');
+                    toastr["success"]("A Comunicação foi um sucesso");
+
+                } else {
+                    if (attempt < 20) {
+                        toastr["warning"](`Tentativa ${attempt} falhou, tentando novamente em 10 segundos...`);
+                        setTimeout(() => monitorApi(data, url,attempt + 1), 10000); // Espera 10 segundos antes de tentar novamente
+                    } else {
+                        toastr["error"]("Limite de tentativas atingido.");
+                    }
+                }
+            };
+            function errorCallback(result){
+
+                console.error('Erro ao acessar a API.');
+                if (attempt < 20) {
+                    setTimeout(() => monitorApi(data, url, attempt + 1), 10000); // Continua tentando em caso de erro
+                } else {
+                    console.log('Limite de tentativas atingido.');
+                }
+            };
+
+        }
     </script>
 }

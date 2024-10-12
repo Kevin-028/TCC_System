@@ -7,6 +7,6 @@ namespace TCC_System_Domain.Arduino.Repositories
 {
     public interface IMessageRepository : IRepository<MessageAction>
     {
-
+        MessageAction GetByProject(Guid id);
     }
 }

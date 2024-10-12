@@ -33,7 +33,6 @@ namespace TCC_System_Application
                  value = obj.Value,
                  Type = obj.Type.ToString()           
             };
-        
         }
         public static async Task<ProductViewModel> ToProductVM(Product obj)
         {
@@ -45,6 +44,18 @@ namespace TCC_System_Application
                 Modules = obj.ProductModeles.Select(x => ToModuleVM(x)).ToList(),
             }; ;
         }
+        public static async Task<MessageVM> ToMessageVM(MessageAction obj)
+        {
+            return new MessageVM()
+            {
+                Id = obj.Id,
+                ProjectID = obj.ProjectID,
+                Active = obj.Active,
+                Action = obj.Action.ToString(),
+                Type = obj.Type.ToString()
+            };
+        }
+
         public static UserViewModel ToUserViewModel(UserJson user)
         {
             return new UserViewModel
@@ -60,7 +71,7 @@ namespace TCC_System_Application
             TypeModule type = (TypeModule)Enum.Parse(typeof(TypeModule), view.Type);
             Code code = (Code)Enum.Parse(typeof(Code), view.Action);
 
-            MessageAction obj = new MessageAction(view.Id, type, code);
+            MessageAction obj = new MessageAction(view.Id, type, code, view.ProjectID);
 
             return obj;
         }

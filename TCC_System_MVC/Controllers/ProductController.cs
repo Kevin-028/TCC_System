@@ -1,11 +1,8 @@
-﻿using Microsoft.Ajax.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using TCC_System_Application.ArduinoService;
+using TCC_System_Application.Mensageria;
 
 namespace TCC_System_MVC.Controllers
 {
@@ -14,18 +11,23 @@ namespace TCC_System_MVC.Controllers
         private readonly IProductCommandService _productCommandService;
         private readonly IProductQueryService _productQueryService;
 
-        public ProductController(IProductCommandService command, IProductQueryService productQueryService)
+        private readonly IMessageCommandService _messageCommandService;
+        private readonly IMessageQueryService _messageQueryService;
+
+        public ProductController(IProductCommandService productCommandService, IProductQueryService productQueryService,
+            IMessageCommandService messageCommandService, IMessageQueryService messageQueryService)
         {
-            _productCommandService = command;
+            _productCommandService = productCommandService;
             _productQueryService = productQueryService;
+            _messageCommandService = messageCommandService;
+            _messageQueryService = messageQueryService;
         }
 
+
         // GET: Product
-        public async  Task<ActionResult> Index()
+        public async Task<ActionResult> Index()
         {
-
             List<ProductViewModel> products = await _productCommandService.GetProductByLogin(UserLogin());
-
             return View(products);
         }
         [HttpPost]
@@ -49,9 +51,8 @@ namespace TCC_System_MVC.Controllers
             return PartialView("_Product");
         }
 
-
         [HttpGet]
-        public async Task<PartialViewResult> GetModuleVM(ModuleViewModel view) 
+        public async Task<PartialViewResult> GetModuleVM(ModuleViewModel view)
         {
 
             if (view.Type == "RFID")
@@ -84,6 +85,23 @@ namespace TCC_System_MVC.Controllers
         }
 
         [HttpPost]
+        public async Task<JsonResult> NewMessage(MessageVM view)
+        {
+            view.Action = "Add";
+            await _messageCommandService.Insert(view, UserLogin());
+            
+            var results = JsonNotification();
+
+            return new JsonResult
+            {
+                Data = new { data = results.Data },
+
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+        
+       
+        [HttpPost]
         public async Task<JsonResult> PostModule(ModuleViewModel view)
         {
 
@@ -98,6 +116,42 @@ namespace TCC_System_MVC.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+        [HttpPost]
+        public async Task<JsonResult> TryComunication(ProductViewModel view)
+        {
+            
+            MessageVM messageVM = new MessageVM() {ProjectID = view.Id };
 
+            messageVM.Action = "Add";
+
+            messageVM.Type = "System";
+
+            await _messageCommandService.Insert(messageVM, UserLogin());
+
+            var results = JsonNotification();
+
+            return new JsonResult
+            {
+                Data = new { data = results.Data },
+
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetComunication(MessageVM view)
+        {
+
+
+
+            var results = JsonNotification();
+
+            return new JsonResult
+            {
+                Data = new { data = results.Data },
+
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
     }
 }
