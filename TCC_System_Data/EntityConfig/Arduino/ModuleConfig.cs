@@ -22,6 +22,8 @@ namespace TCC_System_Data.EntityConfig
                 .HasColumnName("Type")
                 .HasColumnType("VARCHAR(20)");
 
+            builder.Property(x => x.Active);
+
             builder.Property(x => x.RecordCreatedBy).HasColumnType("VARCHAR(30)");
             builder.Property(x => x.RecordUpdatedBy).HasColumnType("VARCHAR(30)");
             builder.Property(x => x.RecordCreationDate).HasColumnType("DATETIME");

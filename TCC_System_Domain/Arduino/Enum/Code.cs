@@ -8,6 +8,7 @@ namespace TCC_System_Domain.Arduino
     {
         Add,
         Remove,
-        Atualizar
+        Atualizar,
+        Pego
     }
 }

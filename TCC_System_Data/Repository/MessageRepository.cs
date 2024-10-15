@@ -19,9 +19,15 @@ namespace TCC_System_Data
         public MessageAction GetByProject(Guid id)
         {
             return Context.MessageActions
-                .Where(x => x.ProjectID == id)
+                .Where(x => x.ProjectID == id && x.Active == true && x.Action != Code.Pego)
                 .FirstOrDefault();
-
         }
+        public MessageAction GetByAPI(Guid id)
+        {
+            return Context.MessageActions
+                .Where(x => x.Id == id && x.Action == Code.Pego && x.Active == true)
+                .FirstOrDefault();
+        }
+
     }
 }

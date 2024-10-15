@@ -5,6 +5,7 @@ using System.Web.Http;
 using TCC_System_Application.ArduinoService;
 using TCC_System_Application.Mensageria;
 using System.Linq;
+using Microsoft.Ajax.Utilities;
 
 
 namespace TCC_System_API.Controllers
@@ -59,6 +60,16 @@ namespace TCC_System_API.Controllers
             return await _messageQueryService.GetMessagebyProjectModule(id, module);
         }
 
+        /// <summary>
+        ///     Nessa API voce ira utilizar para testar a comunicação do seu arduino, para usar vc deve primeiramente dar inicio na pagina de produto
+        /// </summary>
+        /// <param name="id">Id do Projeto</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<MessageVM> TryMessage(Guid id)
+        {
+            return await _messageCommandService.GetMessagebyAPI(id);
+        }
 
         [HttpPost]
         public async Task<bool> PostMessage(Guid id) 

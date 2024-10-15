@@ -126,13 +126,13 @@ namespace TCC_System_MVC.Controllers
 
             messageVM.Type = "System";
 
-            await _messageCommandService.Insert(messageVM, UserLogin());
+            var id = await _messageCommandService.Insert(messageVM, UserLogin());
 
             var results = JsonNotification();
 
             return new JsonResult
             {
-                Data = new { data = results.Data },
+                Data = new { data = results.Data, MessageId = id },
 
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
@@ -142,7 +142,7 @@ namespace TCC_System_MVC.Controllers
         public async Task<JsonResult> GetComunication(MessageVM view)
         {
 
-
+            await _messageCommandService.GetMessageStatus(view.Id);
 
             var results = JsonNotification();
 
@@ -153,5 +153,11 @@ namespace TCC_System_MVC.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
+        [HttpPut]
+        public async Task MessageDesable(MessageVM view)
+        {
+            await _messageCommandService.MessageOff(view.Id);
+        }
+
     }
 }
