@@ -19,22 +19,6 @@ namespace TCC_System_MVC.Core
 
             if (user != null)
             {
-#if !DEBUG
-                var CheckLogin = HttpContext.Current.Request.LogonUserIdentity.Name;
-
-                // Validação Usuário Logado no PC
-                if (user.LoginCompleto.ToUpper() != CheckLogin.ToUpper())
-                {
-                    HttpCookie currentUserCookie = HttpContext.Current.Request.Cookies[Sistema];
-                    HttpContext.Current.Response.Cookies.Remove(Sistema);
-                    currentUserCookie.Expires = DateTime.Now.AddDays(-10);
-                    currentUserCookie.Value = null;
-                    HttpContext.Current.Response.SetCookie(currentUserCookie);
-
-                    return false;
-                }
-#endif
-
                 // Analisa Claims do Usuário
                 if (!string.IsNullOrEmpty(Claims))
                 {

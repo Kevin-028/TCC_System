@@ -1,0 +1,47 @@
+﻿@model  TCC_System_Application.ArduinoService.ModuleViewModel
+
+@if (Model != null)
+{
+
+
+    <!-- Card with header and footer -->
+    <div class="card">
+        <div class="card-header">Comunicação com o Arduino</div>
+        <div class="card-body">
+            <div class="row">
+                <form class="row g-3 needs-validation" novalidate>
+                    @Html.HiddenFor(model => model.Type)
+                    @Html.HiddenFor(model => model.ProjectId)
+                    @Html.HiddenFor(model => model.ModuleId)
+
+                    <button id="Save" class="btn btn-primary w-100 NewInfo Rfid" type="button">
+                        <span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>
+                        <span class="">Novo</span>
+                    </button>
+                </form>
+
+
+
+            </div>
+        </div>
+    </div><!-- End Card with header and footer -->
+}
+
+
+<h3 class="mt-3">Cadastro do modulo RFID</h3>
+<form class="row g-3 needs-validation" novalidate>
+    @Html.HiddenFor(model => model.Type)
+    @Html.HiddenFor(model => model.ProjectId)
+    @Html.HiddenFor(model => model.ModuleId)
+
+    <div class="col-12">
+        @Html.LabelFor(model => model.value, new { @class = "form-label" }) :
+        @Html.TextBoxFor(model => model.value, new { @class = "form-control", required = "required" })
+    </div>
+    <div class="col-12">
+        <button id="Save" class="btn btn-primary w-100 Rfid" type="button">
+            <span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>
+            <span class="">Novo</span>
+        </button>
+    </div>
+</form>

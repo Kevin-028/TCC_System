@@ -1,0 +1,17 @@
+﻿@model TCC_System_Application.ArduinoService.ProductViewModel
+
+<form class="row g-3 needs-validation  align-items-center" novalidate>
+    <div class="col-auto">
+        @Html.LabelFor(model => model.Id, new { @class = "form-label" }) :
+    </div>
+    <div class="col-4">
+        @Html.TextBoxFor(model => model.Id, new { @class = "form-control w-100" })
+    </div>
+    <div class="col-auto">
+        <button id="Save" class="btn btn-info w-30 TryComunication" type="button">
+            <span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>
+            <span class="">Testar comunicação</span>
+        </button>
+    </div>
+
+</form>
