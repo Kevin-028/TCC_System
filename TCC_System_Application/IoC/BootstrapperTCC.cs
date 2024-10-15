@@ -7,7 +7,6 @@ using TCC_System_Domain.Core;
 using TCC_System_Domain.Management;
 using TCC_System_Domain.Arduino.Repositories;
 using TCC_System_Application.ArduinoService;
-using TCC_System_Application.ArduinoService.Query;
 
 namespace TCC_System_Application.IoC
 {
@@ -25,6 +24,8 @@ namespace TCC_System_Application.IoC
 
             container.Register<IProductCommandService, ProductCommandService>(Lifestyle.Scoped);
             container.Register<IProductQueryService, ProductQueryService>(Lifestyle.Scoped);
+
+            container.Register<IMessageRepository, MessageRepository>(Lifestyle.Scoped);
 
 
             // Domain Services

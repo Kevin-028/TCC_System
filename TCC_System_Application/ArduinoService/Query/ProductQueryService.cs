@@ -2,13 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using TCC_System_Application.ManagementServices;
-using TCC_System_Data;
 using TCC_System_Domain.Arduino.Repositories;
 
-namespace TCC_System_Application.ArduinoService.Query
+namespace TCC_System_Application.ArduinoService
 {
     public interface IProductQueryService
     {

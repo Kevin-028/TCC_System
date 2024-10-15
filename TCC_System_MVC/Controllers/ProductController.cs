@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using TCC_System_Application.ArduinoService;
-using TCC_System_Application.ArduinoService.Query;
 
 namespace TCC_System_MVC.Controllers
 {

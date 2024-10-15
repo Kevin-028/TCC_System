@@ -19,7 +19,8 @@ namespace TCC_System_Application.ManagementServices
     {
         private readonly IUserRepository Repository;
 
-        public UserCommandService(IUnitOfWork unitOfWork, IUserRepository repository) : base(unitOfWork)
+        public UserCommandService(IUnitOfWork unitOfWork, IUserRepository repository)
+            : base(unitOfWork)
         {
             Repository = repository;
         }
