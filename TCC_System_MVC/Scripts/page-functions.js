@@ -1,6 +1,10 @@
 ﻿function Load(botao) {
-    botao.children[0].classList.toggle("visually-hidden");
-    botao.children[1].classList.toggle("visually-hidden");
+    try {
+        botao.children[0].classList.toggle("visually-hidden");
+        botao.children[1].classList.toggle("visually-hidden");
+    } catch (e) {
+
+    }
 }
 function ShowJsonResult(result) {
     try {
@@ -36,41 +40,6 @@ function PostForm(form, url, successCallback, resetForm) {
         $.ajax({
             url: url,
             type: 'POST',
-            data: new FormData(form),
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function (result) {
-                successCallback(result);
-                if (resetForm) {
-                    form.reset();
-                }
-            },
-            error: function (xhr) {
-                toastr["error"]("An error occured: " + xhr.status + " " + xhr.statusText);
-            },
-            complete: function () {
-                Load(form.Save)
-            }
-        });
-        return false;
-
-    }
-    else {
-        $('.needs-validation').addClass("was-validated");
-    }
-}
-
-
-function PutForm(form, url, successCallback, resetForm) {
-
-    $(".needs-validation").removeClass("was-validated");
-
-    if (form.checkValidity()) {
-        Load(form.Save)
-        $.ajax({
-            url: url,
-            type: 'PUT',
             data: new FormData(form),
             cache: false,
             contentType: false,
@@ -154,7 +123,64 @@ function PostData(data, url, botao, successCallback) {
     });
 }
 
-function GetData(url, data, successCallback) {
+function PutData(data, url, botao, successCallback) {
+
+    Load(botao);
+
+    $.ajax({
+        url: url,
+        type: 'PUT',
+        data: data,
+        cache: false,
+        success: function (result) {
+            if (successCallback != null) {
+                successCallback(result);
+            }
+
+        },
+        error: function (xhr) {
+            toastr["error"]("An error occured: " + xhr.status + " " + xhr.statusText);
+        },
+        complete: function () {
+            Load(botao);
+        }
+
+    });
+}
+function PutForm(form, url, successCallback, resetForm) {
+
+    $(".needs-validation").removeClass("was-validated");
+
+    if (form.checkValidity()) {
+        Load(form.Save)
+        $.ajax({
+            url: url,
+            type: 'PUT',
+            data: new FormData(form),
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                successCallback(result);
+                if (resetForm) {
+                    form.reset();
+                }
+            },
+            error: function (xhr) {
+                toastr["error"]("An error occured: " + xhr.status + " " + xhr.statusText);
+            },
+            complete: function () {
+                Load(form.Save)
+            }
+        });
+        return false;
+
+    }
+    else {
+        $('.needs-validation').addClass("was-validated");
+    }
+}
+function GetData(url, data, successCallback, errorCallback) {
 
     $.ajax({
         url: url,
@@ -166,6 +192,8 @@ function GetData(url, data, successCallback) {
         },
         error: function (xhr) {
             toastr["error"]("An error occured: " + xhr.status + " " + xhr.statusText);
+
+            errorCallback(result);
         }
     });
 }

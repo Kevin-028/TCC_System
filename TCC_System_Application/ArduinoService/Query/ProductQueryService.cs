@@ -72,7 +72,7 @@ namespace TCC_System_Application.ArduinoService
 
         private string CreateSQLQueryModules()
         {
-            return @"SELECT *, value as Name, [Id] as ModuleId, [ProductId] as ProjectId  FROM Ardu_Modulo ";
+            return @"SELECT *, value as Name, [Id] as ModuleId, [ProductId] as ProjectId, Active FROM Ardu_Modulo ";
         }
         private string CreateSQLQueryProduct()
         {

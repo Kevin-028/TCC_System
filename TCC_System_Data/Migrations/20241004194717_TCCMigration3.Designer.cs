@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TCC_System_Data;
 
 namespace TCC_System_Data.Migrations
 {
     [DbContext(typeof(TCC_Context))]
-    partial class TCC_ContextModelSnapshot : ModelSnapshot
+    [Migration("20241004194717_TCCMigration3")]
+    partial class TCCMigration3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,9 +30,6 @@ namespace TCC_System_Data.Migrations
                         .IsRequired()
                         .HasColumnName("Action")
                         .HasColumnType("VARCHAR(15)");
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit");
 
                     b.Property<Guid>("ProjectID")
                         .HasColumnType("uniqueidentifier");
@@ -61,9 +60,6 @@ namespace TCC_System_Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("bit");
 
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");

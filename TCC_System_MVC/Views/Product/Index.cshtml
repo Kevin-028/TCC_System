@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <section class="section">
     <div class="row">
         <div class="container container-fluid">
@@ -14,13 +15,8 @@
                 </div>
             </div>
         </div>
-
-        <div class="container container-fluid mt-3">
-            <div class="row">
-                <div class="col">
-
-                </div>
-            </div>
+        <div class="container container-fluid m-3">
+            @Html.Partial("_TestComunication", new TCC_System_Application.ArduinoService.ProductViewModel())
         </div>
     </div>
 
@@ -56,7 +52,7 @@
                             <td>
                                 @if (item.Modules.Any(a => a.Type == "RFID"))
                                 {
-                                    <button id="Save" class="btn btn-success modulos" type="button" data-idmodulo="@item.GetModelesType("RFID")"  data-type="RFID">
+                                    <button id="Save" class="btn btn-success modulos" type="button" data-idmodulo="@item.GetModelesType("RFID")" data-type="RFID">
                                         <i class="bx bx-memory-card text-white"></i>
                                     </button>
                                 }
@@ -68,6 +64,11 @@
                                         <i class="bx bx-memory-card text-success"></i>
                                     </button>
                                 }
+
+                                <div class="form-check form-switch" data-id="@item.Id" data-moduleId="">
+                                    <input id="" class="form-check-input" type="checkbox" @item.GetActive(item, "RFID")>
+                                </div>
+
                             </td>
                             <td>
                                 @if (item.Modules.Any(a => a.Type == "FingerprintReader"))
@@ -154,11 +155,9 @@
             function SuccessCallback(result) {
                 RenderPartial("", $("#replaceTarget"));
                 $('#Modal').modal('hide')
+                window.location.reload(true);
             };
-
         });
-
-
         $(document).on('click', "#Save.modulos", function (e) {
 
             var data = new Object();
@@ -166,35 +165,85 @@
             data.ProjectId = this.dataset.id
             data.ModuleId = this.dataset.idmodulo
             data.Type = this.dataset.type
-            
+
 
             GetData('@Url.Action("GetModuleVM", "Product", Request.Url.Scheme)', data, SuccessCallback, false);
 
             function SuccessCallback(result) {
                 $('#Modal').modal('show')
                 RenderPartial(result, $("#replaceTarget"));
-
             };
         });
 
         $(document).on('click', "#Save.Rfid", function (e) {
-            console.log(this.form)
 
              PostForm(this.form, '@Url.Action("PostModule", "Product", null,Request.Url.Scheme)', SuccessCallback, false);
 
             function SuccessCallback(result) {
                 RenderPartial("", $("#replaceTarget"));
                 $('#Modal').modal('hide')
-
+                window.location.reload(true);
             };
+        });
 
+        $(document).on('click', "#Save.Rfid.NewInfo", function (e) {
+
+             PostForm(this.form, '@Url.Action("NewMessage", "Product", null,Request.Url.Scheme)', SuccessCallback, false);
+
+            function SuccessCallback(result) {
+                ShowJsonResult(result)
+            };
         });
 
         //$('#Modal').modal('hide')
 
+        $(document).on('click', "#Save.TryComunication", function (e) {
 
+            let formData = new FormData(this.form);
+            let data = {}
 
+            formData.forEach((value, key) => {
+                data[key] = value;
+            })
+            PostForm(this.form , '@Url.Action("TryComunication", "Product", null,Request.Url.Scheme)', successCallback, false);
 
+            function successCallback(result) {
+                if (ShowJsonResult(result)) {
+                    data.Id = result.MessageId
+                    monitorApi(data, '@Url.Action("GetComunication", "Product", null,Request.Url.Scheme)');
+                }
+            };
+        });
+
+        function monitorApi(data, url, attempt = 1) {
+            const maxAttempts = 15;
+            const retryDelay = 5000; // 5 segundos de espera entre as tentativas
+
+            GetData(url, data, handleSuccess, handleError);
+
+            function handleSuccess(result) {
+                if (result.data.Status === "SUCCESS") {
+                    $("#Save.TryComunication").text('Sucesso');
+                    toastr.success("A comunicação foi um sucesso");
+                    PutData(data, '@Url.Action("MessageDesable", "Product", null, Request.Url.Scheme)', false);
+                } else {
+                    retryOrFail();
+                }
+            }
+            function handleError() {
+                console.error('Erro ao acessar a API.');
+                retryOrFail();
+            }
+            function retryOrFail() {
+                if (attempt < maxAttempts) {
+                    toastr.warning('Aguardando uma resposta do Arduino, Aguarde...');
+                    setTimeout(() => monitorApi(data, url, attempt + 1), retryDelay);
+                } else {
+                    toastr.error("Limite de tentativas atingido. Tente novamente!!!");
+                    PutData(data, '@Url.Action("MessageDesable", "Product", null, Request.Url.Scheme)', false);
+                }
+            }
+        }
 
     </script>
 }

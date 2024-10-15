@@ -36,7 +36,7 @@ namespace TCC_System_Data
         public async Task<IEnumerable<Product>> GetProductByLogin(int loginId)
         {
             return Context.Products
-                .Include(x => x.ProductModeles)
+                .Include("ProductModeles")
                 .Where(x => x.UserId == loginId);
         }
     }

@@ -2,6 +2,7 @@ using System.Web.Http;
 using WebActivatorEx;
 using TCC_System_MVC;
 using Swashbuckle.Application;
+using System.IO;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
@@ -101,7 +102,8 @@ namespace TCC_System_MVC
                         // those comments into the generated docs and UI. You can enable this by providing the path to one or
                         // more Xml comment files.
                         //
-                        //c.IncludeXmlComments(GetXmlCommentsPath());
+
+                        c.IncludeXmlComments(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "bin", "TCC_System_MVC.xml"));
 
                         // Swashbuckle makes a best attempt at generating Swagger compliant JSON schemas for the various types
                         // exposed in your API. However, there may be occasions when more control of the output is needed.

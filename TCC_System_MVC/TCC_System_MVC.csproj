@@ -34,6 +34,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\TCC_System_MVC.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -810,6 +811,7 @@
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Product\_ModuleRF.cshtml" />
     <Content Include="Views\Product\_Product.cshtml" />
+    <Content Include="Views\Product\_TestComunication.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

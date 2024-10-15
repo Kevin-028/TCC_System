@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 using TCC_System_Application.ArduinoService;
 using TCC_System_Application.Mensageria;
+using System.Linq;
+using Microsoft.Ajax.Utilities;
+
 
 namespace TCC_System_API.Controllers
 {
@@ -10,25 +14,65 @@ namespace TCC_System_API.Controllers
     {
         private readonly IProductCommandService _productCommandService;
         private readonly IProductQueryService _productQueryService;
-        
-        private readonly IMessageCommandService messageCommandService;
 
-        public TccSystemController(IProductCommandService command, IProductQueryService productQueryService)
+        private readonly IMessageCommandService _messageCommandService;
+        private readonly IMessageQueryService _messageQueryService;
+
+        public TccSystemController(IProductCommandService productCommandService, IProductQueryService productQueryService, IMessageCommandService messageCommandService, IMessageQueryService messageQueryService)
         {
-            _productCommandService = command;
+            _productCommandService = productCommandService;
             _productQueryService = productQueryService;
+            _messageCommandService = messageCommandService;
+            _messageQueryService = messageQueryService;
         }
 
-        // GET api/values
+        /// <summary>
+        ///  Pegar todos os modulos ativos pelo projeto
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public ProductViewModel ProjectModule(string id)
         {
             return _productQueryService.GetProductModel(Guid.Parse(id));
         }
 
+        /// <summary>
+        ///  Pegar todas as notificações que estao ativas para esse projeto
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<MessageVM> MessagebyProject(Guid id)
+        {
+            return await _messageCommandService.GetMessagebyAPI(id);
+        }
+
+        /// <summary>
+        ///     Pega as informações de um modulo especifico.
+        /// </summary>
+        /// <param name="id"> Id do Projeto</param>
+        /// <param name="module"> RFID, FacialReader, FingerprintReader, System </param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<List<MessageVM>> MessagebyProjectModule(Guid id, string module)
+        {
+            return await _messageQueryService.GetMessagebyProjectModule(id, module);
+        }
+
+        /// <summary>
+        ///     Nessa API voce ira utilizar para testar a comunicação do seu arduino, para usar vc deve primeiramente dar inicio na pagina de produto
+        /// </summary>
+        /// <param name="id">Id do Projeto</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<MessageVM> TryMessage(Guid id)
+        {
+            return await _messageCommandService.GetMessagebyAPI(id);
+        }
 
         [HttpPost]
-        public async Task<bool> PostMessage(Guid IdProduto) 
+        public async Task<bool> PostMessage(Guid id) 
         {
             return true;
         }
