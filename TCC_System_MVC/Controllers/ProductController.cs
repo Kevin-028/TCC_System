@@ -157,6 +157,21 @@ namespace TCC_System_MVC.Controllers
         public async Task MessageDesable(MessageVM view)
         {
             await _messageCommandService.MessageOff(view.Id);
+        }  
+        
+        [HttpPut]
+        public async Task<JsonResult> DesableModele(ModuleViewModel view)
+        {
+             await _productCommandService.UpdateModule(view, UserLogin());
+
+            var results = JsonNotification();
+
+            return new JsonResult
+            {
+                Data = new { data = results.Data },
+
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
         }
 
     }

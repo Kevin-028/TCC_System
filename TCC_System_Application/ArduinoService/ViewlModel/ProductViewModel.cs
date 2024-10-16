@@ -26,7 +26,7 @@ namespace TCC_System_Application.ArduinoService
         {
             var modulo = view.Modules.Where(x => x.Type == type).FirstOrDefault();
             if(modulo != null )
-                if (modulo.Active)
+                if (modulo.Active.Value)
                     return "checked";
             
             return "";

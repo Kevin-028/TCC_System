@@ -17,6 +17,7 @@ namespace TCC_System_Application.ArduinoService
         Task<List<ProductViewModel>> GetProductByLogin(string loginId);
 
         Task InsertModule(ModuleViewModel view, string user);
+        Task UpdateModule(ModuleViewModel view, string user);
     }
 
     public class ProductCommandService : ApplicationService, IProductCommandService
@@ -59,12 +60,34 @@ namespace TCC_System_Application.ArduinoService
             }
         }
 
+        public async Task UpdateModule(ModuleViewModel view, string user)
+        {
+            Product obj = _productRepository.GetProductModules(view.ProjectId);
+
+
+            if (view.Active.HasValue)
+            {
+                obj.SetModuleStatus(view.ModuleId,view.Active.Value);
+            }
+
+            _productRepository.Update(obj);
+
+            if (!Commit(user))
+            {
+                AssertionConcern.AssertNotification("Erro em desativar o modulo");
+            }
+
+        }
+
 
         public async Task Update(ProductViewModel view, string user)
         {
             Product obj = _productRepository.FindByID(view.Id);
-
-            obj.SetName(view.Name);
+            
+            if (!String.IsNullOrEmpty(view.Name))
+            {
+                obj.SetName(view.Name);
+            }
 
             _productRepository.Update(obj);
 

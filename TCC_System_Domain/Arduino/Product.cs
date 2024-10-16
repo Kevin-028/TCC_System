@@ -64,6 +64,15 @@ namespace TCC_System_Domain.Arduino
                 _productModeles.Remove(module);
             }
         }
+        public void SetModuleStatus(Guid guid, bool op)
+        {
+            Module module = _productModeles.Where(x => x.Id == guid).SingleOrDefault();
+
+            if (module != null)
+            {
+                module.SetStatus(op);
+            }
+        }
 
     }
 }

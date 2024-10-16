@@ -31,6 +31,7 @@ namespace TCC_System_Domain.Arduino
             this.Value = value;
         }
         public void SetProductID(Guid id) => this.ProductId = id;
+        public void SetStatus(bool a) => this.Active = a;
         public void SetActive() => this.Active = true;
         public void SetActiveFalse() => this.Active = false;
     }
