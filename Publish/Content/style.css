@@ -1098,14 +1098,8 @@ h6 {
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
-body:not(.toggle-sidebar) .footer {
-    width: calc(100vw - 300px);
-}
 
 .footer {
-    position: fixed;
-    bottom: 0;
-    width: 100vw;
     padding: 20px 0;
     font-size: 14px;
     transition: all 0.3s;
