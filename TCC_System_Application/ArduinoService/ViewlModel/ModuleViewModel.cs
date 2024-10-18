@@ -12,7 +12,7 @@ namespace TCC_System_Application.ArduinoService
         public string Type { get; set; }
         public bool? Active { get; set; }
 
-        [Display(Name = "Codigo do RFID")]
+        [Display(Name = "Valor para cadastro:")]
         public string value { get; set; }
 
 

@@ -69,16 +69,15 @@ namespace TCC_System_MVC.Controllers
                     return PartialView("_ModuleRF", restult);
                 }
 
-
             }
             else if (view.Type == "FingerprintReader")
             {
-                return PartialView("", view);
+                return PartialView("_ModuleRF", view);
 
             }
             else if (view.Type == "FacialReader")
             {
-                return PartialView("", view);
+                return PartialView("_ModuleRF", view);
 
             }
             return null;

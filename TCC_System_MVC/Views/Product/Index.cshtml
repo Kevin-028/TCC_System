@@ -81,12 +81,13 @@
                                     {
 
                                         <button class="btn btn-success" type="button" data-idModulo="@item.GetModelesType("FingerprintReader")">
-                                            <i class="ri-fingerprint-fill text-dark"></i>
+                                            <i class="ri-fingerprint-fill text-white"></i>
                                         </button>
+                                        <div class="form-check form-switch">
 
-                                        <button id="Save" class="btn btn-success modulos" type="button" data-idmodulo="@item.GetModelesType("RFID")" data-type="RFID">
-                                            <i class="bx bx-memory-card text-white"></i>
-                                        </button>
+                                            <input id="ActiveDesative" class="form-check-input" type="checkbox" @item.GetActive(item, "FingerprintReader") data-projectId="@item.Id" data-moduleId="@item.Modules.Where(x => x.Type == "FingerprintReader").FirstOrDefault().ModuleId">
+                                            <label class="form-check-label" for="ActiveDesative">Status:</label>
+                                        </div>
                                     }
                                     else
                                     {
@@ -103,11 +104,13 @@
                                     @if (item.Modules.Any(a => a.Type == "FacialReader"))
                                     {
                                         <button class="btn btn-success" type="button" data-idModulo="@item.GetModelesType("FacialReader")">
-                                            <i class="ri-fingerprint-fill text-dark"></i>
+                                            <i class="ri-fingerprint-fill text-white"></i>
                                         </button>
-                                        <button id="Save" class="btn btn-success modulos" type="button" data-idmodulo="@item.GetModelesType("RFID")" data-type="RFID">
-                                            <i class="bx bx-memory-card text-white"></i>
-                                        </button>
+
+                                        <div class="form-check form-switch">
+                                            <input id="ActiveDesative" class="form-check-input" type="checkbox" @item.GetActive(item, "FacialReader") data-projectId="@item.Id" data-moduleId="@item.Modules.Where(x => x.Type == "FacialReader").FirstOrDefault().ModuleId">
+                                            <label class="form-check-label" for="ActiveDesative">Status:</label>
+                                        </div>
                                     }
                                     else
                                     {
@@ -182,7 +185,6 @@
             data.ProjectId = this.dataset.id
             data.ModuleId = this.dataset.idmodulo
             data.Type = this.dataset.type
-
 
             GetData('@Url.Action("GetModuleVM", "Product", Request.Url.Scheme)', data, SuccessCallback, false);
 
