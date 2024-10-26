@@ -100,28 +100,26 @@ function PostFormFile(form, url, successCallback, resetForm) {
     }
 }
 function PostData(data, url, botao, successCallback) {
-
     Load(botao);
 
     $.ajax({
         url: url,
         type: 'POST',
-        data: data,
+        data: JSON.stringify(data), // Converte o objeto para JSON
+        contentType: 'application/json; charset=utf-8', // Define o tipo de conteúdo
         cache: false,
         success: function (result) {
-
             successCallback(result);
-
         },
         error: function (xhr) {
-            toastr["error"]("An error occured: " + xhr.status + " " + xhr.statusText);
+            toastr["error"]("An error occurred: " + xhr.status + " " + xhr.statusText);
         },
         complete: function () {
             Load(botao);
         }
-
     });
 }
+
 
 function PutData(data, url, botao, successCallback) {
 

@@ -5,6 +5,7 @@ using TCC_System_Application.ArduinoService;
 using TCC_System_Application.ManagementServices;
 using TCC_System_Application.Mensageria;
 using TCC_System_Domain.Arduino;
+using TCC_System_Domain.Blog;
 using TCC_System_Domain.Core.Auth.JsonObjects;
 using TCC_System_Domain.Management;
 
@@ -23,6 +24,10 @@ namespace TCC_System_Application
         public static Module ToModule(ModuleViewModel view)
         {
             return new Module((TypeModule)Enum.Parse(typeof(TypeModule), view.Type), view.value,view.ProjectId);
+        }
+        public static Post ToPost(PostVM view) {
+
+            return new Post(Guid.NewGuid(),view.Title,view.Body,view.UserId);
         }
 
         public static ModuleViewModel ToModuleVM(Module obj)

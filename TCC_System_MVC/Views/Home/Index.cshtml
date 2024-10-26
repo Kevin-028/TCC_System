@@ -1,33 +1,68 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model List<TCC_System_Application.ArduinoService.PostVM>
+@section styles{
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
+
+    <style>
+        /* Aplica a classe .no-style ao contêiner desejado */
+        .no-style * {
+            all: unset !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            font-size: inherit !important;
+            color: inherit !important;
+            background: transparent !important;
+            /* E outras propriedades que você queira sobrescrever */
+        }
+
+
+    </style>
 }
 
-<main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
-    </section>
+@{
+    ViewBag.Title = "Home Page";
+}
+<div class="container-lg">
+    <div class="card">
+        <div class="card-body my-3">
+            @if (Model != null)
+            {
+                <div class="row row-cols-2">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col">
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">@item.RecordCreationDate</div>
+                                    <h2 class="card-title h4">@item.Title</h2>
+                                    <p class="card-text no-style">
+                                        @Html.Raw((item.Body.Length > 200 ? item.Body.Substring(0, 200) + "..." : "teste"))
+                                    </p>
+                                    <a class="btn btn-primary" href="@Url.Action("Post", "Home", new { id = item.Id }, Request.Url.Scheme)">Leia mais →</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div>
+                    sem nada
+                </div>
+            }
 
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </section>
+        </div>
     </div>
-</main>
+</div>
+@section scripts{
+
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+
+    <script>
+
+
+
+
+    </script>
+}

@@ -812,6 +812,8 @@
     <Content Include="Views\Product\_ModuleRF.cshtml" />
     <Content Include="Views\Product\_Product.cshtml" />
     <Content Include="Views\Product\_TestComunication.cshtml" />
+    <Content Include="Views\Home\Post.cshtml" />
+    <Content Include="Views\Home\NewPost.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
