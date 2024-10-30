@@ -38,8 +38,7 @@ namespace TCC_System_Application
                  value = obj.Value,
                  Type = obj.Type.ToString(),
                  Active = obj.Active,
-                 ProjectId = obj.ProductId
-                 
+                 ProjectId = obj.ProductId                 
             };
         }
         public static async Task<ProductViewModel> ToProductVM(Product obj)

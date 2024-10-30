@@ -45,6 +45,11 @@ namespace TCC_System_Domain.Arduino
 
             module.SetId();
 
+            if(module.Type == TypeModule.FacialReader)
+            {
+                module.SetImage(module.Image);
+            }
+
             if (!_productModeles.Exists(x => x.Type == module.Type))
             {
                 _productModeles.Add(module);

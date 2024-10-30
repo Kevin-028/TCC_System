@@ -11,6 +11,7 @@ namespace TCC_System_Domain.Arduino
         public Guid ProductId { get; private set; }
         public Product Product { get; private set; }
         public bool Active { get; private set; }
+        public byte[] Image { get; set; }
 
 
         protected Module() { }
@@ -22,17 +23,13 @@ namespace TCC_System_Domain.Arduino
             SetActive();
         }
         public void SetType(TypeModule type) => this.Type = type;
-        public void SetId()
-        {
-            this.Id = Guid.NewGuid();
-        }
-        public void SetValue(string value)
-        { 
-            this.Value = value;
-        }
+        public void SetId()=>  this.Id = Guid.NewGuid();
+        public void SetValue(string value)=> this.Value = value;
+        
         public void SetProductID(Guid id) => this.ProductId = id;
         public void SetStatus(bool a) => this.Active = a;
         public void SetActive() => this.Active = true;
         public void SetActiveFalse() => this.Active = false;
+        public void SetImage(byte[] image)=> this.Image = image;
     }
 }

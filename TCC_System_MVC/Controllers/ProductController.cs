@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 using TCC_System_Application.ArduinoService;
 using TCC_System_Application.Mensageria;
@@ -24,7 +26,7 @@ namespace TCC_System_MVC.Controllers
         }
 
 
-        // GET: Product
+        [HttpGet]
         public async Task<ActionResult> Index()
         {
             List<ProductViewModel> products = await _productCommandService.GetProductByLogin(UserLogin());
@@ -50,7 +52,6 @@ namespace TCC_System_MVC.Controllers
         {
             return PartialView("_Product");
         }
-
         [HttpGet]
         public async Task<PartialViewResult> GetModuleVM(ModuleViewModel view)
         {
@@ -77,12 +78,11 @@ namespace TCC_System_MVC.Controllers
             }
             else if (view.Type == "FacialReader")
             {
-                return PartialView("_ModuleRF", view);
+                return PartialView("_ModuleFacial", view);
 
             }
             return null;
         }
-
         [HttpPost]
         public async Task<JsonResult> NewMessage(MessageVM view)
         {
@@ -98,11 +98,12 @@ namespace TCC_System_MVC.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-        
-       
         [HttpPost]
         public async Task<JsonResult> PostModule(ModuleViewModel view)
         {
+
+            if (!string.IsNullOrEmpty(view.Image))
+                view.imageBytes = Convert.FromBase64String(view.Image);
 
             await _productCommandService.InsertModule(view, UserLogin());
 
@@ -136,7 +137,6 @@ namespace TCC_System_MVC.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-
         [HttpGet]
         public async Task<JsonResult> GetComunication(MessageVM view)
         {
@@ -157,7 +157,6 @@ namespace TCC_System_MVC.Controllers
         {
             await _messageCommandService.MessageOff(view.Id);
         }  
-        
         [HttpPut]
         public async Task<JsonResult> DesableModele(ModuleViewModel view)
         {
@@ -172,6 +171,5 @@ namespace TCC_System_MVC.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-
     }
 }

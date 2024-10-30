@@ -10,6 +10,7 @@ using TCC_System_Application.ArduinoService;
 using TCC_System_Application.Mensageria;
 using TCC_System_Domain.Blog;
 using TCC_System_Data.Repository;
+using Emgu.CV.Face;
 
 namespace TCC_System_Application.IoC
 {
