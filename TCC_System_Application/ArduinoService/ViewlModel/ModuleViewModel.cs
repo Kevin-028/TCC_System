@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace TCC_System_Application.ArduinoService
 {
@@ -15,9 +13,12 @@ namespace TCC_System_Application.ArduinoService
         [Display(Name = "Valor para cadastro:")]
         public string value { get; set; }
 
-        public string Image { get; set; }
+        public string ImageName { get; set; }
         public byte[] imageBytes { get; set; }
 
+
+        public bool isMatch { get; set; }
+        public double confidence { get; set; }
 
     }
 }

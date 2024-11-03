@@ -23,7 +23,16 @@ namespace TCC_System_Application
         }
         public static Module ToModule(ModuleViewModel view)
         {
-            return new Module((TypeModule)Enum.Parse(typeof(TypeModule), view.Type), view.value,view.ProjectId);
+            var a = (TypeModule)Enum.Parse(typeof(TypeModule), view.Type);
+
+            if(a == TypeModule.FacialReader)
+            {
+                return new Module(a, view.value,view.ProjectId,view.imageBytes);
+
+            }
+            return new Module(a, view.value, view.ProjectId);
+
+
         }
         public static Post ToPost(PostVM view) {
 

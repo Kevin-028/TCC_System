@@ -58,7 +58,7 @@ namespace TCC_System_MVC.Controllers
 
             if (view.Type == "RFID")
             {
-                if (view.ModuleId == null)
+                if (view.ModuleId == Guid.Empty)
                 {
                     return PartialView("_ModuleRF", view);
                 }
@@ -78,8 +78,18 @@ namespace TCC_System_MVC.Controllers
             }
             else if (view.Type == "FacialReader")
             {
-                return PartialView("_ModuleFacial", view);
+                if (view.ModuleId == Guid.Empty)
+                {
+                    return PartialView("_ModuleFacial", view);
+                }
+                else
+                {
+                    var restult = await _productQueryService.GetModelById(view.ModuleId);
+                    string base64Image = Convert.ToBase64String(restult.imageBytes);
+                    restult.ImageName = $"data:image/jpeg;base64,{base64Image}";
 
+                    return PartialView("_ModuleFacial", restult);
+                }
             }
             return null;
         }
@@ -102,8 +112,8 @@ namespace TCC_System_MVC.Controllers
         public async Task<JsonResult> PostModule(ModuleViewModel view)
         {
 
-            if (!string.IsNullOrEmpty(view.Image))
-                view.imageBytes = Convert.FromBase64String(view.Image);
+            if (!string.IsNullOrEmpty(view.ImageName))
+                view.imageBytes = Convert.FromBase64String(view.ImageName);
 
             await _productCommandService.InsertModule(view, UserLogin());
 

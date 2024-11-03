@@ -33,6 +33,7 @@ function ShowJsonResult(result) {
 
 function PostForm(form, url, successCallback, resetForm) {
 
+
     $(".needs-validation").removeClass("was-validated");
 
     if (form.checkValidity()) {

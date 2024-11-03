@@ -7,17 +7,25 @@
 
 
 <form class="" novalidate>
+    <div class="row">
+        <div class="col">
+            <button id="compareFacial" class="btn btn-danger" type="button">
+                Comparar
+            </button>
+        </div>
+    </div>
+
     @Html.HiddenFor(model => model.Type)
     @Html.HiddenFor(model => model.ProjectId)
     @Html.HiddenFor(model => model.ModuleId)
     <div class="row justify-content-around">
         <div class="col d-flex justify-content-center">
-            <button id="openCamera" class="btn btn-danger"  type="button">
+            <button id="openCamera" class="btn btn-danger" type="button">
                 Abrir camera
-            </button>    
-        </div>    
+            </button>
+        </div>
         <div class="col d-flex justify-content-center">
-            <button id="capture" class="btn btn-warning"  type="button">
+            <button id="capture" class="btn btn-warning" type="button">
                 Captura
             </button>
         </div>
@@ -27,7 +35,8 @@
             <video id="video" width="320" height="240" autoplay></video>
         </div>
         <div class="col d-flex justify-content-center">
-            <canvas id="canvas" width="320" height="240"></canvas>
+            <canvas src="@Model.ImageName" id="canvas" width="320" height="240"  style="display:none"></canvas>
+            <img id="ModalImage" src="@Model.ImageName" width="320" height="240" alt="Imagem carregada" />
         </div>
     </div>
 

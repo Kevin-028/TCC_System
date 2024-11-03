@@ -22,6 +22,14 @@ namespace TCC_System_Domain.Arduino
             SetProductID(productId);
             SetActive();
         }
+        public Module(TypeModule type, string value, Guid productId, byte[] bytes)
+        {
+            SetType(type);
+            SetValue(value);
+            SetProductID(productId);
+            SetActive();
+            SetImage(bytes);
+        }
         public void SetType(TypeModule type) => this.Type = type;
         public void SetId()=>  this.Id = Guid.NewGuid();
         public void SetValue(string value)=> this.Value = value;

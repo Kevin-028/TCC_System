@@ -54,7 +54,7 @@
                                     @if (item.Modules.Any(a => a.Type == "RFID"))
                                     {
 
-                                        <button id="Save" class="btn btn-success modulos" type="button" data-idmodulo="@item.GetModelesType("RFID")" data-type="RFID">
+                                        <button id="Save" class="btn btn-success modulos" type="button" data-type="RFID" data-projectId="@item.Id" data-idmodulo="@item.GetModelesType("RFID")" data-type="RFID">
                                             <i class="bx bx-memory-card text-white"></i>
                                         </button>
                                         <div class="form-check form-switch">
@@ -63,7 +63,7 @@
                                     }
                                     else
                                     {
-                                        <button id="Save" class="btn btn-outline-warning modulos" type="button" data-id="@item.Id" data-type="RFID">
+                                        <button id="Save" class="btn btn-outline-warning modulos" type="button" data-projectId="@item.Id" data-type="RFID">
                                             <span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>
                                             <i class="bx bx-memory-card text-success"></i>
                                         </button>
@@ -76,7 +76,7 @@
                                     @if (item.Modules.Any(a => a.Type == "FingerprintReader"))
                                     {
 
-                                        <button class="btn btn-success" type="button" data-idModulo="@item.GetModelesType("FingerprintReader")">
+                                        <button  id="Save" class="btn btn-success modulos" type="button"data-type="FingerprintReader" data-projectId="@item.Id" data-idModulo="@item.GetModelesType("FingerprintReader")">
                                             <i class="ri-fingerprint-fill text-white"></i>
                                         </button>
                                         <div class="form-check form-switch">
@@ -85,7 +85,7 @@
                                     }
                                     else
                                     {
-                                        <button id="Save" class="btn btn-outline-warning modulos" type="button" data-id="@item.Id" data-type="FingerprintReader">
+                                        <button id="Save" class="btn btn-outline-warning modulos" type="button" data-projectId="@item.Id" data-type="FingerprintReader">
                                             <span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>
                                             <i class="ri-fingerprint-fill text-dark"></i>
                                         </button>
@@ -96,7 +96,7 @@
                                 <div class="center-g">
                                     @if (item.Modules.Any(a => a.Type == "FacialReader"))
                                     {
-                                        <button class="btn btn-success" type="button" data-idModulo="@item.GetModelesType("FacialReader")">
+                                        <button id="Save" class="btn btn-success modulos" type="button"data-type="FacialReader" data-projectId="@item.Id" data-idModulo="@item.GetModelesType("FacialReader")">
                                             <i class="ri-camera-3-fill text-white"></i>
                                         </button>
 
@@ -106,7 +106,7 @@
                                     }
                                     else
                                     {
-                                        <button id="Save" class="btn btn-outline-warning modulos" type="button" data-id="@item.Id" data-type="FacialReader">
+                                        <button id="Save" class="btn btn-outline-warning modulos" type="button" data-projectId="@item.Id" data-type="FacialReader">
                                             <span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>
                                             <i class="ri-camera-3-fill text-dark"></i>
                                         </button>
@@ -123,8 +123,6 @@
     </div>
 
 }
-
-
 <div class="modal fade" id="Modal" tabindex="-1">
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
@@ -140,9 +138,6 @@
         </div>
     </div>
 </div><!-- End Modal Dialog Scrollable-->
-
-
-
 
 @section scripts{
 
@@ -173,7 +168,7 @@
 
             var data = new Object();
 
-            data.ProjectId = this.dataset.id
+            data.ProjectId = this.dataset.projectid
             data.ModuleId = this.dataset.idmodulo
             data.Type = this.dataset.type
 
@@ -184,9 +179,8 @@
                 RenderPartial(result, $("#replaceTarget"));
             };
         });
-
         $(document).on('click', "#Save.Rfid", function (e) {
-
+           
              PostForm(this.form, '@Url.Action("PostModule", "Product", null,Request.Url.Scheme)', SuccessCallback, false);
 
             function SuccessCallback(result) {
@@ -195,7 +189,6 @@
                 window.location.reload(true);
             };
         });
-
         $(document).on('click', "#Save.Rfid.NewInfo", function (e) {
 
              PostForm(this.form, '@Url.Action("NewMessage", "Product", null,Request.Url.Scheme)', SuccessCallback, false);
@@ -221,9 +214,6 @@
                 }
             };
         });
-
-        //$('#Modal').modal('hide')
-
         $(document).on('click', "#Save.TryComunication", function (e) {
 
             let formData = new FormData(this.form);
@@ -233,11 +223,12 @@
                 data[key] = value;
             })
 
-            PostForm(this.form , '@Url.Action("PostModule", "Product", null,Request.Url.Scheme)', successCallback, false);
+            PostForm(this.form, '@Url.Action("TryComunication", "Product", null,Request.Url.Scheme)', successCallback, false);
 
             function successCallback(result) {
                 if (ShowJsonResult(result)) {
                     data.Id = result.MessageId
+                    console.log(data)
                     monitorApi(data, '@Url.Action("GetComunication", "Product", null,Request.Url.Scheme)');
                 }
             };
@@ -301,8 +292,10 @@
 
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-        });
+            $(canvas).show();
+            $("#ModalImage").hide();
 
+        });
         $(document).on('click', "#sendImage", function (e) {
             e.preventDefault();
             stopCamera()
@@ -318,10 +311,39 @@
             formData.forEach((value, key) => {
                 data[key] = value;
             })
+
             // Cria o objeto ViewModel para enviar
-            data.Image = base64Image;
+            data.ImageName = base64Image;
 
             PostData(data, '@Url.Action("PostModule", "Product", null,Request.Url.Scheme)', this, SuccessCallback)
+
+            function SuccessCallback(result) {
+
+                RenderPartial("", $("#replaceTarget"));
+                $('#Modal').modal('hide')
+                window.location.reload(true);
+            };
+        });
+        $(document).on('click', "#compareFacial", function (e) {
+            e.preventDefault();
+            stopCamera()
+            const canvas = document.getElementById("canvas");
+
+            // Converte o canvas para base64
+            const imageDataURL = canvas.toDataURL("image/jpeg");
+            const base64Image = imageDataURL.split(",")[1]; // Remove o prefixo 'data:image/jpeg;base64,'
+
+            let formData = new FormData(this.form);
+            let data = {}
+
+            formData.forEach((value, key) => {
+                data[key] = value;
+            })
+
+            // Cria o objeto ViewModel para enviar
+            data.ImageName = base64Image;
+
+            PostData(data, '@Url.Action("CompareFace", "Facial", null,Request.Url.Scheme)', this, SuccessCallback)
 
             function SuccessCallback(result) {
 
@@ -336,7 +358,7 @@
                 stream.getTracks().forEach(track => track.stop()); // Interrompe todas as tracks ativas do stream
                 stream = null; // Remove a referência ao stream
             } else {
-                console.warn("Nenhuma câmera ativa para fechar.");
+                //console.warn("Nenhuma câmera ativa para fechar.");
             }
         }
 

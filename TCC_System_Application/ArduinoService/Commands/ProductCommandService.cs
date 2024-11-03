@@ -31,7 +31,7 @@ namespace TCC_System_Application.ArduinoService
         Task UpdadtePost(PostVM view, string user);
         Task RemovePost(Guid id);
 
-        (bool isMatch, double confidence) CompareImages(Guid id, byte[] inputImageBytes);
+        Task<ModuleViewModel> CompareImages(ModuleViewModel view);
     }
 
     public class ProductCommandService : ApplicationService, IProductCommandService
@@ -169,13 +169,13 @@ namespace TCC_System_Application.ArduinoService
         #endregion
 
         #region Facial
-        public (bool isMatch, double confidence) CompareImages(Guid id, byte[] inputImageBytes)
+        public async Task<ModuleViewModel> CompareImages(ModuleViewModel view)
         {
             LBPHFaceRecognizer recognizer = new LBPHFaceRecognizer();
             bool isRecognizerTrained = false;
             double confidenceThreshold = 80.0;
 
-            Product obj = _productRepository.GetProductModules(id);
+            Product obj = _productRepository.GetProductModules(view.ProjectId);
 
             Module module = obj.ProductModeles.Where(x => x.Type == TypeModule.FacialReader).FirstOrDefault();
             byte[] storedImageBytes = module.Image;
@@ -186,7 +186,7 @@ namespace TCC_System_Application.ArduinoService
                 using (var inputImage = new Mat())
                 using (var storedImage = new Mat())
                 {
-                    CvInvoke.Imdecode(inputImageBytes, ImreadModes.Grayscale, inputImage);
+                    CvInvoke.Imdecode(view.imageBytes, ImreadModes.Grayscale, inputImage);
                     CvInvoke.Imdecode(storedImageBytes, ImreadModes.Grayscale, storedImage);
 
                     // Train the recognizer only once
@@ -203,16 +203,18 @@ namespace TCC_System_Application.ArduinoService
                     var result = recognizer.Predict(inputImage);
 
                     // Determine match based on confidence
-                    bool isMatch = result.Distance <= confidenceThreshold;
+                    view.isMatch = result.Distance <= confidenceThreshold;
 
-                    return (isMatch, result.Distance);
+                    view.confidence = result.Distance;
+                    return (view);
                 }
             }
             catch (Exception ex)
             {
+                view.isMatch = false;
                 // Handle exceptions (e.g., log the error)
                 Console.WriteLine($"Error: {ex.Message}");
-                return (false, double.MaxValue);
+                return (view);
             }
         }
         #endregion

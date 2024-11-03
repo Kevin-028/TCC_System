@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -24,13 +25,32 @@ namespace TCC_System_MVC.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> CompareFace(FacialVM view)
+        public async Task<JsonResult> CompareFace(ModuleViewModel view)
         {
+            if (!string.IsNullOrEmpty(view.ImageName))
+                view.imageBytes = Convert.FromBase64String(view.ImageName);
+
 
             // Compara a imagem usando o serviço de reconhecimento facial
-            var (isMatch, confidence) = _productCommandService.CompareImages(view.ProjectId,view.Image);
+            try
+            {
+                var mod = await _productCommandService.CompareImages(view);
+            
+                var results = JsonNotification();
+                string a = mod.isMatch ? $"Rosto reconhecido com confiança: {mod.confidence}" : "Rosto não reconhecido.";
+                return new JsonResult
+                {
+                    Data = new { data = results.Data, teste = a },
 
-            return Content(isMatch ? $"Rosto reconhecido com confiança: {confidence}" : "Rosto não reconhecido.");
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }
