@@ -11,6 +11,8 @@ namespace TCC_System_Application.ArduinoService
     {
         Task<ModuleViewModel> GetModelById(Guid id);
         ProductViewModel GetProductModel(Guid id);
+        Task<IEnumerable<PostVM>> GetAllPosts();
+        Task<PostVM> GetPostbyId(Guid id);
 
     }
 
@@ -67,12 +69,29 @@ namespace TCC_System_Application.ArduinoService
 
         }
 
+        public async Task<IEnumerable<PostVM>> GetAllPosts()
+        {
+            string sql = CreateSQLPost();
+
+            return await _repository.GetDbConnection().QueryAsync<PostVM>(sql);
+        }
+        
+        public async Task<PostVM> GetPostbyId(Guid id)
+        {
+            string sql = CreateSQLPost()+ " WHERE id = @id";
+            var a = await _repository.GetDbConnection().QueryAsync<PostVM>(sql, new { id });
+            return a.FirstOrDefault();
+        }
 
 
+        private string CreateSQLPost()
+        {
+            return @"SELECT * FROM [BLOG_POST] ";
+        }
 
         private string CreateSQLQueryModules()
         {
-            return @"SELECT *, value as Name, [Id] as ModuleId, [ProductId] as ProjectId, Active FROM Ardu_Modulo ";
+            return @"SELECT *, [image] as imageBytes ,[value] as Name, [Id] as ModuleId, [ProductId] as ProjectId, Active FROM Ardu_Modulo ";
         }
         private string CreateSQLQueryProduct()
         {

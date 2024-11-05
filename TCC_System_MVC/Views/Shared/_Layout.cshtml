@@ -29,7 +29,7 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a href="@Url.Action("", "Home")" class="logo d-flex align-items-center">
                 <img src="~/Content/IMG/Logo_Pato.gif" alt="">
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -66,20 +66,22 @@
 
                     </ul><!-- End Profile Dropdown Items -->
                 </li><!-- End Profile Nav -->
-
             </ul>
         </nav><!-- End Icons Navigation -->
-
     </header><!-- End Header -->
     <!-- ======= Sidebar ======= -->
     <aside id="sidebar" class="sidebar">
-
         <ul class="sidebar-nav" id="sidebar-nav">
-
             <li class="nav-item">
                 <a class="nav-link " href="@Url.Action("", "Home")">
                     <i class="bi bi-grid"></i>
-                    <span>home</span>
+                    <span>Home</span>
+                </a>
+            </li><!-- End Dashboard Nav -->   
+            <li class="nav-item">
+                <a class="nav-link " href="@Url.Action("NewPost", "Home")">
+                    <i class="bi bi-grid"></i>
+                    <span>Novo Post</span>
                 </a>
             </li><!-- End Dashboard Nav -->
 
@@ -88,7 +90,6 @@
                     <i class="bi bi-grid"></i>
                     <span>Projetos</span>
                 </a>
-
                 @*<a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-gem"></i><span>Projetos</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
@@ -110,7 +111,6 @@
                     </li>
                 </ul>*@
             </li><!-- End Icons Nav -->
-
             <li class="nav-item">
                 <a class="nav-link " href="@Url.Action("../swagger")">
                     <i class="bi bi-grid"></i>
@@ -118,15 +118,12 @@
                 </a>
             </li><!-- End Dashboard Nav -->
         </ul>
-
     </aside><!-- End Sidebar-->
 
     <main id="main" class="main">
         <div class="container-fluid">
             @RenderBody()
-        
         </div>
-
     </main><!-- End #main -->
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
@@ -135,7 +132,6 @@
         </div>
     </footer><!-- End Footer -->
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

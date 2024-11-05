@@ -8,6 +8,9 @@ using TCC_System_Domain.Management;
 using TCC_System_Domain.Arduino.Repositories;
 using TCC_System_Application.ArduinoService;
 using TCC_System_Application.Mensageria;
+using TCC_System_Domain.Blog;
+using TCC_System_Data.Repository;
+using Emgu.CV.Face;
 
 namespace TCC_System_Application.IoC
 {
@@ -19,6 +22,7 @@ namespace TCC_System_Application.IoC
             container.Register<IUserRepository, UserRepository>(Lifestyle.Scoped);
             container.Register<IProductRepository, ArduinoRepository>(Lifestyle.Scoped);
             container.Register<IMessageRepository, MessageRepository>(Lifestyle.Scoped);
+            container.Register<IPostRepository, PostRepository>(Lifestyle.Scoped);
 
             // Application Services
             container.Register<IUserCommandService, UserCommandService>(Lifestyle.Scoped);

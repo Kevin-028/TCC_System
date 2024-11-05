@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 using TCC_System_Application.ArduinoService;
 using TCC_System_Application.Mensageria;
@@ -24,7 +26,7 @@ namespace TCC_System_MVC.Controllers
         }
 
 
-        // GET: Product
+        [HttpGet]
         public async Task<ActionResult> Index()
         {
             List<ProductViewModel> products = await _productCommandService.GetProductByLogin(UserLogin());
@@ -50,14 +52,13 @@ namespace TCC_System_MVC.Controllers
         {
             return PartialView("_Product");
         }
-
         [HttpGet]
         public async Task<PartialViewResult> GetModuleVM(ModuleViewModel view)
         {
 
             if (view.Type == "RFID")
             {
-                if (view.ModuleId == null)
+                if (view.ModuleId == Guid.Empty)
                 {
                     return PartialView("_ModuleRF", view);
                 }
@@ -77,12 +78,21 @@ namespace TCC_System_MVC.Controllers
             }
             else if (view.Type == "FacialReader")
             {
-                return PartialView("_ModuleRF", view);
+                if (view.ModuleId == Guid.Empty)
+                {
+                    return PartialView("_ModuleFacial", view);
+                }
+                else
+                {
+                    var restult = await _productQueryService.GetModelById(view.ModuleId);
+                    string base64Image = Convert.ToBase64String(restult.imageBytes);
+                    restult.ImageName = $"data:image/jpeg;base64,{base64Image}";
 
+                    return PartialView("_ModuleFacial", restult);
+                }
             }
             return null;
         }
-
         [HttpPost]
         public async Task<JsonResult> NewMessage(MessageVM view)
         {
@@ -98,11 +108,12 @@ namespace TCC_System_MVC.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-        
-       
         [HttpPost]
         public async Task<JsonResult> PostModule(ModuleViewModel view)
         {
+
+            if (!string.IsNullOrEmpty(view.ImageName))
+                view.imageBytes = Convert.FromBase64String(view.ImageName);
 
             await _productCommandService.InsertModule(view, UserLogin());
 
@@ -136,7 +147,6 @@ namespace TCC_System_MVC.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-
         [HttpGet]
         public async Task<JsonResult> GetComunication(MessageVM view)
         {
@@ -157,7 +167,6 @@ namespace TCC_System_MVC.Controllers
         {
             await _messageCommandService.MessageOff(view.Id);
         }  
-        
         [HttpPut]
         public async Task<JsonResult> DesableModele(ModuleViewModel view)
         {
@@ -172,6 +181,5 @@ namespace TCC_System_MVC.Controllers
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
         }
-
     }
 }

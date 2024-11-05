@@ -18,11 +18,13 @@ namespace TCC_System_Data.EntityConfig
                 .WithMany(y => y.ProductModeles)
                 .HasForeignKey(k => k.ProductId);
 
+
             builder.Property(x => x.Type).HasConversion<string>()
                 .HasColumnName("Type")
                 .HasColumnType("VARCHAR(20)");
 
             builder.Property(x => x.Active);
+            builder.Property(x => x.Image);
 
             builder.Property(x => x.RecordCreatedBy).HasColumnType("VARCHAR(30)");
             builder.Property(x => x.RecordUpdatedBy).HasColumnType("VARCHAR(30)");

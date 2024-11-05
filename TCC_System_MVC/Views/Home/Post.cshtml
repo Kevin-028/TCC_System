@@ -1,0 +1,28 @@
+﻿@model TCC_System_Application.ArduinoService.PostVM
+@{
+    ViewBag.Title = "Post";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container-lg">
+    <div class="card">
+        <div class="card-body my-3">
+            <article>
+                <!-- Post header-->
+                <header class="mb-4">
+                    <h1 class="fw-bolder mb-1">@Model.Title</h1>
+                    <div class="text-muted fst-italic mb-2">Criada em @Model.RecordCreationDate</div>
+                </header>
+                <!-- Post content-->
+                <section class="conteudo-quill">
+                    @Html.Raw(Model.Body) <!-- Renderiza o conteúdo HTML -->
+                </section>
+            </article>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+}

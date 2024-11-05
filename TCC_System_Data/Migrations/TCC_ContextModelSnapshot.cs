@@ -65,6 +65,9 @@ namespace TCC_System_Data.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
@@ -121,6 +124,38 @@ namespace TCC_System_Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Produto");
+                });
+
+            modelBuilder.Entity("TCC_System_Domain.Blog.Post", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RecordCreatedBy")
+                        .HasColumnType("VARCHAR(30)");
+
+                    b.Property<DateTime?>("RecordCreationDate")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<DateTime?>("RecordUpdateDate")
+                        .HasColumnType("DATETIME");
+
+                    b.Property<string>("RecordUpdatedBy")
+                        .HasColumnType("VARCHAR(30)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("VARCHAR(100)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnName("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Blog_Post");
                 });
 
             modelBuilder.Entity("TCC_System_Domain.Management.Claims", b =>
