@@ -37,6 +37,11 @@ namespace TCC_System_API.Controllers
             return _productQueryService.GetProductModel(Guid.Parse(id));
         }
 
+        public ProductViewModel ProjectModulebyId(int id)
+        {
+            return _productQueryService.GetProductModel(id);
+        }
+
         /// <summary>
         ///  Pegar todas as notificações que estao ativas para esse projeto
         /// </summary>

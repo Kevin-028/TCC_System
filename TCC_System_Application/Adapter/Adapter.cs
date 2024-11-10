@@ -57,6 +57,7 @@ namespace TCC_System_Application
                 Id = obj.Id,
                 Name = obj.Name,
                 UserId = obj.UserId,
+                Nid = obj.NId,
                 Modules = obj.ProductModeles.Select(x => ToModuleVM(x)).ToList()
             };
         }

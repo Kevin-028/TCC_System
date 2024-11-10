@@ -11,6 +11,7 @@ namespace TCC_System_Application.ArduinoService
     {
         Task<ModuleViewModel> GetModelById(Guid id);
         ProductViewModel GetProductModel(Guid id);
+        ProductViewModel GetProductModel(int id);
         Task<IEnumerable<PostVM>> GetAllPosts();
         Task<PostVM> GetPostbyId(Guid id);
 
@@ -63,6 +64,27 @@ namespace TCC_System_Application.ArduinoService
 
                 // Inicializa a lista de módulos
                 product.Modules = modules;
+
+                return product;
+            }
+
+        }
+        public ProductViewModel GetProductModel(int id)
+        {
+            // Consulta SQL para obter o produto e os módulos associados
+            string sql = CreateSQLQueryProduct() + " WHERE Nid = @id";
+
+            using (var connection = _repository.GetDbConnection())
+            {
+                var mult = connection.QueryMultiple(sql, new { id });
+
+                // Cria a instância do ProductViewModel
+                ProductViewModel product = mult.ReadFirstOrDefault<ProductViewModel>();
+
+                if (product == null)
+                {
+                    return null; // ou uma nova instância de ProductViewModel, dependendo da sua lógica
+                }
 
                 return product;
             }

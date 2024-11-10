@@ -9,6 +9,7 @@ namespace TCC_System_Domain.Arduino
     public class Product : Entity, IAggregateRoot
     {
         public Guid Id { get; private set; }
+        public int NId { get; private set; }
         public string Name { get; private set; }
         public int UserId { get; private set; }
 

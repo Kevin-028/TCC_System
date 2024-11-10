@@ -12,6 +12,7 @@ namespace TCC_System_Application.ArduinoService
         public Guid Id { get; set; }
         [Display(Name = "Nome")]
         public string Name { get; set; }
+        public int Nid {  get; set; }
         public int UserId { get; set; }
         public List<ModuleViewModel> Modules { get; set; }
 
