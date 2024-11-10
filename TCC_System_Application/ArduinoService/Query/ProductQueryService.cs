@@ -100,7 +100,7 @@ namespace TCC_System_Application.ArduinoService
         
         public async Task<PostVM> GetPostbyId(Guid id)
         {
-            string sql = CreateSQLPost()+ " WHERE id = @id";
+            string sql = CreateSQLPost()+ " WHERE ID = @id ORDER BY RECORDCREATIONDATE DESC";
             var a = await _repository.GetDbConnection().QueryAsync<PostVM>(sql, new { id });
             return a.FirstOrDefault();
         }
