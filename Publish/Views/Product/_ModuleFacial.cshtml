@@ -1,0 +1,49 @@
+﻿@model  TCC_System_Application.ArduinoService.ModuleViewModel
+
+<div class="row">
+    <h3 class="mb-3">Cadastro do modulo @ViewBag.Modulo</h3>
+
+</div>
+
+
+<form class="" novalidate>
+    <div class="row">
+        <div class="col">
+            <button id="compareFacial" class="btn btn-danger" type="button">
+                Comparar
+            </button>
+        </div>
+    </div>
+
+    @Html.HiddenFor(model => model.Type)
+    @Html.HiddenFor(model => model.ProjectId)
+    @Html.HiddenFor(model => model.ModuleId)
+    <div class="row justify-content-around">
+        <div class="col d-flex justify-content-center">
+            <button id="openCamera" class="btn btn-danger" type="button">
+                Abrir camera
+            </button>
+        </div>
+        <div class="col d-flex justify-content-center">
+            <button id="capture" class="btn btn-warning" type="button">
+                Captura
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col d-flex justify-content-center">
+            <video id="video" width="320" height="240" autoplay></video>
+        </div>
+        <div class="col d-flex justify-content-center">
+            <canvas src="@Model.ImageName" id="canvas" width="320" height="240"  style="display:none"></canvas>
+            <img id="ModalImage" src="@Model.ImageName" width="320" height="240" alt="Imagem carregada" />
+        </div>
+    </div>
+
+    <div class="col-12 my-3">
+        <button id="sendImage" class="btn btn-primary w-100 Rfid" type="button">
+            <span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>
+            <span class="">Salvar</span>
+        </button>
+    </div>
+</form>

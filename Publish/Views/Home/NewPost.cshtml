@@ -1,0 +1,90 @@
+﻿@model TCC_System_Application.ArduinoService.PostVM
+
+@{
+    ViewBag.Title = "NewPost";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
+
+}
+
+<div class="container-lg">
+    <div class="card">
+        <div class="card-body my-3">
+            <form class="row g-3 needs-validation">
+                <div class="col-12">
+                    @Html.LabelFor(model => model.Title, new { @class = "form-label" }) :
+                    @Html.TextBoxFor(model => model.Title, new { @class = "form-control", required = "required" })
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Body, new { @class = "form-label" }) :
+                        <div id="editor" style="height: 200px;"></div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <button id="Save" class="btn btn-primary w-100" type="button">
+                        <span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>
+                        <span class="">Criar conta</span>
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+
+
+
+    <script>
+        const quill = new Quill('#editor', {
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    ['blockquote', 'code-block'],
+                    ['link', 'formula'],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'list': 'check' }],
+                    [{ 'script': 'sub' }, { 'script': 'super' }],
+                    [{ 'indent': '-1' }, { 'indent': '+1' }],
+                    [{ 'direction': 'rtl' }],
+                    [{ 'size': ['small', false, 'large', 'huge'] }],
+                    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                    [{ 'color': [] }, { 'background': [] }],
+                    [{ 'font': [] }],
+                    [{ 'align': [] }],
+                    ['clean']
+                ]
+            },
+            theme: 'snow',
+        });
+
+        $(document).on('click', "#Save", function (e) {
+            e.preventDefault(); // Impede o envio padrão do formulário
+
+            let formData = new FormData(this.form);
+            let data = {};
+
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            data['Body'] = quill.root.innerHTML;
+
+            console.log(data);
+
+            PostData(data, '@Url.Action("InsertPost", "Home", null, Request.Url.Scheme)', this, SuccessCallback);
+
+            function SuccessCallback(result) {  
+                RenderPartial(result, $("#replaceTarget"));
+            };
+        });
+    </script>
+
+}
