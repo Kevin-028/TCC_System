@@ -59,10 +59,9 @@ void sendHttpRequest() {
   delay(5000);
 
   // Monta a requisição POST
-  String postRequest = "POST /api/TccSystem/ProjectModulebyId/?id=2 HTTP/1.1\r\n";
-  postRequest += "Host: gerencia360.com.br\r\n";
-  postRequest += "Content-Type: application/json\r\n";
-  postRequest += "Content-Length: 0\r\n";  // Sem corpo no envio
+  // Monta a requisição GET
+  String postRequest = "GET /api/TccSystem/TryMessage/41282062-67ea-4d26-983a-1013cae7a7a2 HTTP/1.1\r\n";
+  postRequest += "Host: " + apiUrl + "\r\n";
   postRequest += "Connection: close\r\n\r\n";
   
   // Envia o comando para iniciar o envio da requisição

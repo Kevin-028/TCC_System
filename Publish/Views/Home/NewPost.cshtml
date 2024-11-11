@@ -27,7 +27,7 @@
                 <div class="col-12">
                     <button id="Save" class="btn btn-primary w-100" type="button">
                         <span class="spinner-border spinner-border-sm visually-hidden" role="status" aria-hidden="true"></span>
-                        <span class="">Criar conta</span>
+                        <span class="">Novo Post</span>
                     </button>
                 </div>
 
@@ -81,8 +81,10 @@
 
             PostData(data, '@Url.Action("InsertPost", "Home", null, Request.Url.Scheme)', this, SuccessCallback);
 
-            function SuccessCallback(result) {  
-                RenderPartial(result, $("#replaceTarget"));
+            function SuccessCallback(result) {
+              setInterval(function () {
+                  window.location.replace('@Url.Action("", "Home")');
+              }, 1500);
             };
         });
     </script>

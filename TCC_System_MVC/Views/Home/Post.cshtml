@@ -5,6 +5,34 @@
 }
 @section styles{
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
+
+    <style>
+        /* Estilo para o bloco de citação (blockquote) */
+        .ql-editor blockquote {
+            border-left: 4px solid #ccc;
+            padding-left: 15px;
+            font-style: italic;
+            color: #555;
+            background-color: #f9f9f9;
+            margin: 10px 0;
+            font-size: 1.1em;
+            line-height: 1.5;
+        }
+
+        /* Estilo para o bloco de código (code-block) */
+        .ql-editor .ql-code-block {
+            background-color: #2e2e2e;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            white-space: pre-wrap; /* Garante que quebras de linha no código funcionem corretamente */
+            word-wrap: break-word; /* Quebra palavras longas se necessário */
+            margin: 10px 0;
+        }
+
+    </style>
 }
 
 
