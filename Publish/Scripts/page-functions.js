@@ -187,9 +187,8 @@ function GetData(url, data, successCallback, errorCallback) {
         data: data,
         cache: false,
         success: function (result) {
-            if (successCallback != null) {
-                successCallback(result);
-            }
+             successCallback(result);
+            
         },
         error: function (xhr) {
             toastr["error"]("An error occured: " + xhr.status + " " + xhr.statusText);

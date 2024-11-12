@@ -47,8 +47,15 @@ namespace TCC_System_Data
                     entry.Property("RecordUpdatedBy").CurrentValue = user;
                 }
             }
+            try
+            {
+                return base.SaveChanges();
 
-            return base.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
         }
 
     }

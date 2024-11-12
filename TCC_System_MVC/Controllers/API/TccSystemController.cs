@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Web.Http;
 using TCC_System_Application.ArduinoService;
 using TCC_System_Application.Mensageria;
-using System.Linq;
-using Microsoft.Ajax.Utilities;
+using TCC_System_Domain.Core;
 
 
 namespace TCC_System_API.Controllers
@@ -18,12 +18,16 @@ namespace TCC_System_API.Controllers
         private readonly IMessageCommandService _messageCommandService;
         private readonly IMessageQueryService _messageQueryService;
 
+        public IHandler<DomainNotification> Notifications;
+
         public TccSystemController(IProductCommandService productCommandService, IProductQueryService productQueryService, IMessageCommandService messageCommandService, IMessageQueryService messageQueryService)
         {
             _productCommandService = productCommandService;
             _productQueryService = productQueryService;
             _messageCommandService = messageCommandService;
             _messageQueryService = messageQueryService;
+            Notifications = DomainEvent.Container.GetInstance<IHandler<DomainNotification>>();
+
         }
 
         /// <summary>
@@ -37,9 +41,24 @@ namespace TCC_System_API.Controllers
             return _productQueryService.GetProductModel(Guid.Parse(id));
         }
 
-        public ProductViewModel ProjectModulebyId(int id)
+        [HttpPost]
+        public async Task<bool> PostNewModule(string id, string type,string value )
         {
-            return _productQueryService.GetProductModel(id);
+            ModuleViewModel view = new ModuleViewModel() { ProjectId = Guid.Parse(id), Type = type,Value = value };
+
+            await _productCommandService.InsertModule(view, "Sytem");
+
+            return JsonNotification();
+        }
+
+        [HttpGet]
+        public async Task<bool> NewModule(string id, string type,string value )
+        {
+            ModuleViewModel view = new ModuleViewModel() { ProjectId = Guid.Parse(id), Type = type,Value = value };
+
+            await _productCommandService.InsertModule(view, "Sytem");
+
+            return JsonNotification();
         }
 
         /// <summary>
@@ -80,6 +99,20 @@ namespace TCC_System_API.Controllers
         public async Task<bool> PostMessage(Guid id) 
         {
             return true;
+        }
+
+
+        public bool JsonNotification()
+        {
+            if (!Notifications.HasNotifications())
+            {
+                return true;
+            }
+
+            var errors = new List<string>();
+            Notifications.GetValues().ForEach(x => errors.Add(x.Value));
+
+            return false;
         }
 
     }

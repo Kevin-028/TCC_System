@@ -27,10 +27,10 @@ namespace TCC_System_Application
 
             if(a == TypeModule.FacialReader)
             {
-                return new Module(a, view.value,view.ProjectId,view.imageBytes);
+                return new Module(a, view.Value,view.ProjectId,view.imageBytes);
 
             }
-            return new Module(a, view.value, view.ProjectId);
+            return new Module(a, view.Value, view.ProjectId);
 
 
         }
@@ -44,7 +44,7 @@ namespace TCC_System_Application
             return new ModuleViewModel
             {
                  ModuleId = obj.Id,
-                 value = obj.Value,
+                 Value = obj.Value,
                  Type = obj.Type.ToString(),
                  Active = obj.Active,
                  ProjectId = obj.ProductId                 
@@ -57,7 +57,6 @@ namespace TCC_System_Application
                 Id = obj.Id,
                 Name = obj.Name,
                 UserId = obj.UserId,
-                Nid = obj.NId,
                 Modules = obj.ProductModeles.Select(x => ToModuleVM(x)).ToList()
             };
         }

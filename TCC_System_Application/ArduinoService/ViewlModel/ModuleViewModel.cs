@@ -11,7 +11,7 @@ namespace TCC_System_Application.ArduinoService
         public bool? Active { get; set; }
 
         [Display(Name = "Valor para cadastro:")]
-        public string value { get; set; }
+        public string Value { get; set; }
 
         public string ImageName { get; set; }
         public byte[] imageBytes { get; set; }

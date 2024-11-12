@@ -25,7 +25,7 @@
 @if (Model != null)
 {
 
-    <div class="card">
+    <div class="card table-responsive">
         <div class="card-body">
             <h5 class="card-title">Projetos Existentes: @Model.Count()</h5>
             <!-- Table with stripped rows -->
@@ -172,7 +172,7 @@
             data.ModuleId = this.dataset.idmodulo
             data.Type = this.dataset.type
 
-            GetData('@Url.Action("GetModuleVM", "Product", Request.Url.Scheme)', data, SuccessCallback);
+            GetData('@Url.Action("GetModuleVM", "Product", Request.Url.Scheme)', data, SuccessCallback,null);
 
             function SuccessCallback(result) {
                 $('#Modal').modal('show')

@@ -18,7 +18,6 @@ namespace TCC_System_Data.EntityConfig
                 .WithMany(y => y.ProductModeles)
                 .HasForeignKey(k => k.ProductId);
 
-
             builder.Property(x => x.Type).HasConversion<string>()
                 .HasColumnName("Type")
                 .HasColumnType("VARCHAR(20)");
