@@ -35,16 +35,19 @@ namespace TCC_System_MVC.Controllers
 
         [HttpGet]
         [ClaimsAuthorize(Claims = "PADRAO")]
+  
         public async Task<ActionResult> Post(Guid id)
         {
             return View(await _productQueryService.GetPostbyId(id));
         }
+        [ClaimsAuthorize(Claims = "ADM")]
         [HttpGet]
         public async Task<ActionResult> NewPost()
         {
             return View();
         }
 
+        [ClaimsAuthorize(Claims = "ADM")]
         [HttpPost]
         public async Task<JsonResult> InsertPost(PostVM view)
         {

@@ -93,7 +93,8 @@ namespace TCC_System_Application.ArduinoService
 
         public async Task<IEnumerable<PostVM>> GetAllPosts()
         {
-            string sql = CreateSQLPost();
+            string sql = CreateSQLPost() + "  ORDER BY RECORDCREATIONDATE DESC";
+
 
             return await _repository.GetDbConnection().QueryAsync<PostVM>(sql);
         }
